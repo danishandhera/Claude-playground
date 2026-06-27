@@ -1,0 +1,4 @@
+.cache/
+comparison.html
+# parsed menus are local snapshots of your saved pages
+menus/
