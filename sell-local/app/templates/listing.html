@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ listing.title or "Listing" }} — Sell Local{% endblock %}
+{% block content %}
+<article id="listing-detail">
+  <a href="/c/{{ community.slug }}" class="inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-brand-600">
+    <span aria-hidden="true">&larr;</span> {{ community.name }}
+  </a>
+
+  <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    {% if listing.image_url %}
+    <img class="listing-image aspect-video w-full object-cover" src="{{ listing.image_url }}" alt="{{ listing.title }}">
+    {% endif %}
+
+    <div class="p-5 sm:p-6">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <h1 class="listing-title text-2xl font-bold leading-tight tracking-tight text-ink">{{ listing.title or "Untitled" }}</h1>
+        <p class="listing-price shrink-0 rounded-full bg-brand-50 px-3 py-1 text-lg font-semibold text-brand-700">
+          {% if listing.price is not none %}{{ listing.currency }} {{ listing.price }}{% else %}Ask / Free{% endif %}
+        </p>
+      </div>
+
+      {% if listing.description %}
+      <div class="listing-description mt-4 whitespace-pre-line leading-relaxed text-slate-700">
+        <p>{{ listing.description }}</p>
+      </div>
+      {% endif %}
+
+      <div class="listing-contact mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <p class="mb-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500">Contact seller</p>
+        {% include "_render_contact.html" %}
+      </div>
+
+      <dl class="listing-meta mt-6 grid grid-cols-1 gap-x-6 gap-y-2 border-t border-slate-100 pt-4 text-sm sm:grid-cols-3">
+        <div>
+          <dt class="text-slate-400">Community</dt>
+          <dd class="font-medium text-ink">{{ community.name }}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-400">Posted</dt>
+          <dd class="font-medium text-ink">{{ listing.created_at|display_dt }}</dd>
+        </div>
+        <div>
+          <dt class="text-slate-400">Expires</dt>
+          <dd class="font-medium text-ink">{{ listing.expires_at|display_dt }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</article>
+{% endblock %}

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Env / secrets
+.env
+
+# SQLite DB + WAL sidecars (regenerate with scripts/init_db.py)
+sell_local.db
+sell_local.db-wal
+sell_local.db-shm
+*.db
+*.db-wal
+*.db-shm
