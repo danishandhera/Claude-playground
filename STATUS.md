@@ -13,7 +13,7 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 | Project | Phase | Next action | Owner | Blocker |
 |---|---|---|---|---|
 | **firsttimemoms** | 🔨 → 🧪 | Focus group + onboard 2–3 real caregivers | **User** | Real caregiver supply (none yet) |
-| **Sell Local** | 🔨 | Frontend styling pass → Reviewer gate → push | Team | None |
+| **Sell Local** | 🚢 (M0/M1) | Decide M2 (paste-ad intake + LLM parse + approval queue) | Team/User | None |
 | **food-compare** | 🚢 | — (built; local UAE delivery price CLI) | — | None |
 | **dubizzle-tool** | 🚢 | — (built; local listing filter) | — | None |
 
@@ -28,11 +28,13 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 - **Open decisions:** Arab/GCC as its own segment card vs. a religious-support filter · first shop products (mughat + black-seed-honey?) · WhatsApp business number status.
 
 ## Sell Local — aggregator for P2P ads from Dubai community WhatsApp groups
-- **State:** Backend M0+M1 delivered — FastAPI + SQLite + FTS5 search, seed data, browse/detail/search routes. Runs; 15/15 smoke checks. Functional but unstyled.
-- **Location:** `sell-local/` (not yet committed/pushed)
-- **Next:** Frontend design pass (Tailwind) → Reviewer security/quality gate → commit + push.
-- **Then (M2/M3):** paste-ad intake + LLM parse + approval queue; later Phase 2 WhatsApp Cloud API intake.
+- **State:** M0+M1 built, Tailwind-styled, **security-reviewed (SHIP), and on GitHub** (commit 8c384c0). FastAPI + SQLite + FTS5, browse/detail/search, 15/15 smoke checks. Mobile-first teal/slate design.
+- **Location:** `sell-local/` · pushed to `danishandhera/Claude-playground`
+- **Next (M2/M3):** paste-ad intake + LLM parse + approval queue; later Phase 2 WhatsApp Cloud API intake.
 - **Confirmed:** stack Python/FastAPI/SQLite/htmx on Fly.io; contacts public in Phase 1 (one-line flip to gated); pin Python 3.12 in a Dockerfile at deploy.
+- **Tracked follow-ups (from Reviewer, non-blocking):**
+  - Backend: search `total` counts only current page (`main.py:168`) — use a COUNT(*) of the search query; before M2, document/enforce the "all timestamps UTC `+00:00` ISO" invariant next to `PUBLIC_PREDICATE` (`db.py:17`); migrate off deprecated `@app.on_event` + add a real migration story for M2.
+  - Frontend: add pagination / "load more" UI (`_listings.html`) — pages 2+ currently unreachable; tighten `tel:` href to clean digits (`_contact_value.html`).
 
 ---
 
