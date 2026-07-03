@@ -2,7 +2,7 @@
 
 _Living dashboard of all projects, maintained by the GM. Ask "where are we?" anytime._
 
-**Last updated:** 2026-07-01
+**Last updated:** 2026-07-03
 
 Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating · 🚢 shipped · ⏸ paused
 
@@ -14,7 +14,7 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 |---|---|---|---|---|
 | **firsttimemoms** | 🔨 → 🧪 | Focus group + onboard 2–3 real caregivers | **User** | Real caregiver supply (none yet) |
 | **Sell Local** | 🚢 (M0/M1) | Decide M2 (paste-ad intake + LLM parse + approval queue) | Team/User | None |
-| **food-compare** | 🚢 | — (built; local UAE delivery price CLI) | — | None |
+| **food-compare** | 🚢 | Add real fixtures to arm the benchmark guard | User | None |
 | **dubizzle-tool** | 🚢 | — (built; local listing filter) | — | None |
 
 ---
@@ -35,6 +35,10 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 - **Tracked follow-ups (from Reviewer, non-blocking):**
   - Backend: search `total` counts only current page (`main.py:168`) — use a COUNT(*) of the search query; before M2, document/enforce the "all timestamps UTC `+00:00` ISO" invariant next to `PUBLIC_PREDICATE` (`db.py:17`); migrate off deprecated `@app.on_event` + add a real migration story for M2.
   - Frontend: add pagination / "load more" UI (`_listings.html`) — pages 2+ currently unreachable; tighten `tel:` href to clean digits (`_contact_value.html`).
+
+## food-compare — local UAE delivery price comparison CLI
+- **State:** Shipped. Added a **unified fee-breakdown schema** (delivery/packing/service/small-order as explicit fields) shared by estimate mode now + exact-total mode later; TOTAL flags as an estimate when fees are unknown. Added `benchmark.py`, a parser-rot guard that re-prices real saved order pages against true checkout totals. On GitHub (commit f0bcb16).
+- **Next (user):** the benchmark has **no fixtures yet** — save a real Talabat order page + its true checkout total into `fixtures/fixtures.json` to arm the guard.
 
 ---
 
