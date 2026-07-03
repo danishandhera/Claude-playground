@@ -2,3 +2,7 @@
 comparison.html
 # parsed menus are local snapshots of your saved pages
 menus/
+# saved restaurant pages used as benchmark fixtures are bulky/personal;
+# keep the ground-truth fixtures.json tracked but not the raw pages
+fixtures/*.html
+fixtures/*_files/

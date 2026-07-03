@@ -221,6 +221,7 @@ def parse_talabat(html):
         "app": "talabat",
         "restaurant": restaurant,
         "delivery_fee": delivery,
+        "packing_fee": None,   # filled by exact-total mode
         "min_order": minimum,
         "items": sorted(items.values(), key=lambda x: x["name"].lower()),
     }
@@ -332,18 +333,41 @@ def price_order(menu, order):
             missing.append(name)
             rows.append({"req": name, "matched": None, "qty": qty,
                          "unit": None, "line": None, "score": 0})
+    # Unified breakdown schema (orderwise-style): every fee is an explicit field.
+    # None = unknown until checkout, so the SAME schema serves estimate mode now
+    # and exact-total mode later. total = sum of the fields we actually know.
     delivery = menu.get("delivery_fee")
-    total = subtotal + (delivery or 0.0)
+    packing = menu.get("packing_fee")
+    service = menu.get("service_fee")          # None until exact-total mode
+    small_order = menu.get("small_order_fee")  # None until exact-total mode
+    known_fees = sum(f for f in (delivery, packing, service, small_order)
+                     if f is not None)
+    total = subtotal + known_fees
+    estimate = service is None or small_order is None
     return {
         "app": menu["app"],
         "restaurant": menu.get("restaurant"),
         "rows": rows,
         "subtotal": subtotal,
         "delivery": delivery,
+        "packing": packing,
+        "service": service,
+        "small_order": small_order,
         "total": total,
+        "estimate": estimate,
         "missing": missing,
         "min_order": menu.get("min_order"),
     }
+
+
+# Ordered (key, label) pairs for the per-app price breakdown.
+BREAKDOWN = [
+    ("subtotal", "Items subtotal"),
+    ("delivery", "Delivery fee"),
+    ("packing", "Packing fee"),
+    ("service", "Service fee"),
+    ("small_order", "Small-order fee"),
+]
 
 
 # --------------------------------------------------------------------------- #
@@ -370,9 +394,13 @@ def print_compare(results):
                       f"AED {fmt(row['unit'])}  = {fmt(row['line'])}{warn}")
             else:
                 print(f"   {row['qty']}× {row['req']:<32} NOT FOUND")
-        print(f"   {'Subtotal':<40} AED {fmt(r['subtotal'])}")
-        print(f"   {'Delivery':<40} AED {fmt(r['delivery'])}")
-        print(f"   {'TOTAL':<40} AED {fmt(r['total'])}")
+        # breakdown: always show items + delivery; show other fees only when known
+        for key, label in BREAKDOWN:
+            val = r[key]
+            if key in ("subtotal", "delivery") or val is not None:
+                print(f"   {label:<40} AED {fmt(val)}")
+        suffix = "  (estimate — fees/promos at checkout)" if r["estimate"] else ""
+        print(f"   {'TOTAL':<40} AED {fmt(r['total'])}{suffix}")
         if r["min_order"] and r["subtotal"] < r["min_order"]:
             print(f"   ⚠️ below minimum order (AED {fmt(r['min_order'])})")
         if r["missing"]:
@@ -401,14 +429,21 @@ def write_html(results, out):
             f"<td class='r'>{fmt(row['line'])}</td></tr>"
             for row in r["rows"]
         )
+        breakdown = ""
+        for ki, (key, label) in enumerate(BREAKDOWN):
+            val = r[key]
+            sep = " sep" if ki == 0 else ""
+            muted = "" if (key in ("subtotal", "delivery") or val is not None) else " muted"
+            cell = fmt(val) if val is not None else "— at checkout"
+            breakdown += (f"<tr class='{sep}{muted}'><td>{label}</td><td></td>"
+                          f"<td class='r'>{cell}</td></tr>")
+        est = "<div class='est'>estimate — service/small-order fees &amp; promos at checkout</div>" if r["estimate"] else ""
         rows.append(f"""
         <div class="card {cls}">
           <h2>{escape(r['app'].upper())} <small>{escape(r['restaurant'] or '')}</small></h2>
-          <table>{items}
-            <tr class="sep"><td>Subtotal</td><td></td><td class="r">{fmt(r['subtotal'])}</td></tr>
-            <tr><td>Delivery</td><td></td><td class="r">{fmt(r['delivery'])}</td></tr>
+          <table>{items}{breakdown}
             <tr class="tot"><td>TOTAL (AED)</td><td></td><td class="r">{fmt(r['total'])}</td></tr>
-          </table>
+          </table>{est}
         </div>""")
     html = f"""<!doctype html><meta charset=utf-8><title>Food price comparison</title>
 <style>
@@ -419,9 +454,11 @@ def write_html(results, out):
  h2{{margin:0 0 10px;font-size:17px}} small{{color:#8b93a7;font-weight:400}}
  table{{width:100%;border-collapse:collapse}} td{{padding:4px 0}}
  .r{{text-align:right;font-variant-numeric:tabular-nums}}
- .sep td{{border-top:1px solid #2a2f3a;padding-top:8px;color:#8b93a7}}
- .tot td{{font-weight:700;font-size:16px;padding-top:6px}}
+ .sep td{{border-top:1px solid #2a2f3a;padding-top:8px}}
+ .muted td{{color:#5a6273}}
+ .tot td{{font-weight:700;font-size:16px;padding-top:6px;border-top:1px solid #2a2f3a}}
  .card.cheap .tot td{{color:#3ddc84}}
+ .est{{margin-top:8px;font-size:12px;color:#8b93a7;font-style:italic}}
 </style>
 <h1>Order comparison</h1><div class="wrap">{''.join(rows)}</div>"""
     with open(out, "w", encoding="utf-8") as f:
