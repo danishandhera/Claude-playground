@@ -2,7 +2,7 @@
 
 _Living dashboard of all projects, maintained by the GM. Ask "where are we?" anytime._
 
-**Last updated:** 2026-07-03
+**Last updated:** 2026-07-24
 
 Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating · 🚢 shipped · ⏸ paused
 
@@ -16,6 +16,7 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 | **Sell Local** | 🚢 (M0/M1) | Decide M2 (paste-ad intake + LLM parse + approval queue) | Team/User | None |
 | **food-compare** | 🚢 | Add real fixtures to arm the benchmark guard | User | None |
 | **dubizzle-tool** | 🚢 | — (built; local listing filter) | — | None |
+| **beanbuds** | 💡 | Architect blueprint, then "log a brew" screen mockup | Team/User | None |
 
 ---
 
@@ -39,6 +40,14 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 ## food-compare — local UAE delivery price comparison CLI
 - **State:** Shipped. Added a **unified fee-breakdown schema** (delivery/packing/service/small-order as explicit fields) shared by estimate mode now + exact-total mode later; TOTAL flags as an estimate when fees are unknown. Added `benchmark.py`, a parser-rot guard that re-prices real saved order pages against true checkout totals. On GitHub (commit f0bcb16).
 - **Next (user):** the benchmark has **no fixtures yet** — save a real Talabat order page + its true checkout total into `fixtures/fixtures.json` to arm the guard.
+
+## beanbuds — personal specialty-coffee tracking app
+- **State:** 💡 Idea, named & scaffolded 2026-07-24. GM prior-art research done (see `beanbuds/README.md`).
+- **Location:** `beanbuds/` (not yet committed)
+- **Idea:** log beans + brew method + milk + tasting notes; chart preferences; compare roaster's stated flavor profile vs. what the user actually tastes, sliced by method (French press vs. De'Longhi Magnifica). Mobile-first, offline, must look nice.
+- **Prior art verdict:** mature space — borrow proven design (Beanconqueror = best fork/reference, Ionic/Capacitor one-codebase→web+Android); build fresh for the roaster-vs-me charting gap. Steal: method-aware brew forms, SCA flavor wheel vocab, LLM bag-scanning.
+- **Leaning stack:** PWA or Capacitor/Ionic, offline-first, local storage (architect to confirm).
+- **Next:** architect blueprint → "log a brew" screen mockup for user reaction.
 
 ---
 
