@@ -16,8 +16,8 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 | **Sell Local** | 🚢 (M0/M1) | Decide M2 (paste-ad intake + LLM parse + approval queue) | Team/User | None |
 | **food-compare** | 🚢 | Add real fixtures to arm the benchmark guard | User | None |
 | **dubizzle-tool** | 🚢 | — (built; local listing filter) | — | None |
-| **beanbuds** | 💡 | Architect blueprint, then "log a brew" screen mockup | Team/User | None |
-| **Stash** | 💡 | User requests IG data export (JSON, Saved-only, All time) | **User** | Waiting on export file |
+| **beanbuds** | 📐 | Review blueprint + answer 5 open Qs, then build v1 (PWA) | **User** | None |
+| **Stash** | 📐 | Confirm 2 blueprint decisions + request IG export | **User** | Waiting on export file |
 | **helthi** | 💡 → 📐 | Confirm tz + HR-zone model; then Phase 0/1 build (Whoop spine) | Team/User | Samsung export sample (gates Phase 3) |
 
 ---
@@ -44,12 +44,12 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 - **Next (user):** the benchmark has **no fixtures yet** — save a real Talabat order page + its true checkout total into `fixtures/fixtures.json` to arm the guard.
 
 ## beanbuds — personal specialty-coffee tracking app
-- **State:** 💡 Idea, named & scaffolded 2026-07-24. GM prior-art research done (see `beanbuds/README.md`).
-- **Location:** `beanbuds/` (not yet committed)
+- **State:** 📐 Design. Named & scaffolded 2026-07-24; GM prior-art research + "log a brew" mockup done; **architect blueprint complete** (`beanbuds/ARCHITECTURE.md`).
+- **Location:** `beanbuds/` (README + ARCHITECTURE committed)
 - **Idea:** log beans + brew method + milk + tasting notes; chart preferences; compare roaster's stated flavor profile vs. what the user actually tastes, sliced by method (French press vs. De'Longhi Magnifica). Mobile-first, offline, must look nice.
-- **Prior art verdict:** mature space — borrow proven design (Beanconqueror = best fork/reference, Ionic/Capacitor one-codebase→web+Android); build fresh for the roaster-vs-me charting gap. Steal: method-aware brew forms, SCA flavor wheel vocab, LLM bag-scanning.
-- **Leaning stack:** PWA or Capacitor/Ionic, offline-first, local storage (architect to confirm).
-- **Next:** architect blueprint → "log a brew" screen mockup for user reaction.
+- **Stack (decided):** PWA — React + Vite + TS, Tailwind, IndexedDB via Dexie, Recharts, Workbox. No backend/accounts/sync in v1 (reversible to Capacitor later). Method-aware brews = discriminated union keyed on `method` + method registry. Roaster-vs-me = set math on a shared curated flavor taxonomy (~24 terms under 8 SCA families).
+- **v1 scope:** scaffold → beans CRUD → method-aware brew screen → structured tasting + roaster-vs-me strip → charts → backup (export/import + persistent storage). Bag-scan, full wheel, sync = v2.
+- **Next (user):** review blueprint + answer 5 open Qs (sync vs. single-phone, units, bitterness slider, 24-term flavor list, milk enum), then build v1.
 
 ## helthi — personal fitness-data consolidator (Whoop + Hevy + Samsung Health)
 - **State:** 📐 Design. Named & scaffolded 2026-07-31. GitScout prior-art + architect blueprint both done (`helthi/README.md`, `PRIOR-ART.md`, `ARCHITECTURE.md`).
@@ -60,12 +60,14 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 - **Phasing:** P0 scaffold/schema → P1 Whoop end-to-end (useful spine) → P2 Hevy CSV → P3 Samsung → P4 cross-source HR join → P5 polish.
 - **Blocking on user:** (1) confirm home tz (Asia/Dubai?) + HR-zone model; (2) real Samsung Health export sample (gates Phase 3 parser).
 
-## Stash — searchable home for Instagram saves
-- **State:** 💡 Scaffolded 2026-08-01. Name chosen; Phase-1-first; delivered as a **mobile web app**.
-- **Location:** `stash/` (see `stash/README.md`)
-- **Idea:** hundreds/thousands of IG saves (movies, songs, workouts, Dubai food, travel, anime) → parse the official "Download Your Information" JSON export → searchable/filterable app over existing collections. Phase 2 (later): enrich captions via `instaloader` + LLM tagging for summaries/recommendations ("what anime to watch next").
-- **Critical path:** blocked on **user requesting the IG export** (JSON, "Saved" only, All time). Parser built once we have a real sample schema.
-- **Next (team):** GitScout prior-art on IG-export parsers / saved-post browsers; then architect Phase-1 blueprint.
+## Stash — content-searchable home for Instagram saves
+- **State:** 📐 Design. Scaffolded 2026-08-01; GitScout prior-art + architect blueprint both done (`stash/README.md`, `ARCHITECTURE.md`).
+- **Location:** `stash/`
+- **Idea:** hundreds/thousands of IG saves (movies, songs, workouts, Dubai food, travel, anime) → make each **findable by content** (never re-watch a reel). Search "anime" → titled, summarized cards; plus "what should I watch next" recommendations.
+- **Design (locked by architect):** one local Python service (FastAPI + SQLite/`sqlite-vec`) on the M4 + thin React/Vite/Tailwind mobile UI; phone reaches Mac over Tailscale. **Two-track ingest:** (A) parse the official DYI JSON export = ban-free/token-free seed (URL+author+collection+date, NO captions); (B) throttled, resumable enricher hitting IG's private mobile JSON endpoints with the user's own cookies to fill caption/thumbnail. **Cascade-gated enrichment:** caption → whisper.cpp (local/free) → Apple Vision OCR (local/free) → ONE cached Claude call per post. All heavy compute on-device; only token spend is the batched structuring call, cached forever by shortcode. Search + recommend fully local (sqlite-vec + FTS5).
+- **Rate/ban mitigation:** instaloader's sliding-window limits hard-coded; jittered sleep; checkpoint/resume; hard-stop → "re-auth needed" on any IG challenge. App stays fully useful on the ban-free seed alone.
+- **Phasing:** 1a DYI parse + searchable app ($0, no API risk) → 1b caption enrichment via private API (real unlock, still $0) → 1c transcript/OCR for thin-caption reels → 2 semantic search + recommendations + the one LLM call.
+- **Blocking on user:** (1) request the IG export (JSON, "Saved" only, All time) — the seed list; (2) confirm 2 decisions: phone-access method (default Tailscale) + enrich strategy (lazy per-collection vs. backfill-all).
 
 ---
 
