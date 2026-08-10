@@ -1,0 +1,48 @@
+# helthi configuration (non-secret). Secrets live in .env (gitignored).
+# ARCHITECTURE.md config decisions land here so nothing is hardcoded inline.
+
+[general]
+# Home timezone used to derive the "day" concept and to localize offset-less
+# timestamps (Hevy CSV). Locked decision (README 2026-08-01): Asia/Dubai (UTC+4).
+home_tz = "Asia/Dubai"
+
+# SQLite database file (relative to project root unless absolute). Gitignored.
+db_path = "helthi.db"
+
+[hr_zones]
+# HR-zone model. Locked decision (README 2026-08-01): Karvonen / heart-rate
+# reserve. Zones are % of Heart Rate Reserve (HRR = max_hr - resting_hr),
+# not flat %HRmax. resting_hr is pulled free from Whoop recovery; max_hr comes
+# from Whoop body measurement (falls back to 220 - age if absent).
+model = "karvonen"
+
+# Lower bound of each zone as a fraction of HRR (Karvonen). Zone i covers
+# [thresholds[i-1], thresholds[i]). 5-zone split at 50/60/70/80/90% HRR.
+# Tunable here without code change.
+thresholds = [0.50, 0.60, 0.70, 0.80, 0.90]
+
+# Fallback max HR inputs when Whoop body-measurement max_heart_rate is absent.
+# age_years drives (220 - age). Set to 0/omit if you rely on measured max_hr.
+age_years = 30
+# Optional hard override; if > 0 this wins over both Whoop and age formula.
+max_hr_override = 0
+
+[sources.whoop]
+# Whoop backfill start date (ISO). First sync backfills from here; later syncs
+# use the ingest_run.cursor watermark. Empty = client default (trailing window).
+backfill_start = "2021-01-01"
+
+[sources.hevy]
+inbox = "data/inbox/hevy"
+archive = "data/archive/hevy"
+
+[sources.samsung]
+inbox = "data/inbox/samsung"
+archive = "data/archive/samsung"
+
+[align]
+# Padding (seconds) around a session window when selecting Samsung HR samples,
+# to tolerate watch/app clock skew (ARCHITECTURE.md §3.3c). LATER phase.
+hr_pad_seconds = 60
+# If a session has no end time, estimate duration (minutes) for HR overlap.
+assumed_session_minutes = 60

@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "helthi"
+version = "0.1.0"
+description = "Local fitness-data consolidator (Whoop + Hevy + Samsung -> SQLite + dashboard)."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+    "authlib>=1.3",     # Whoop OAuth2 (via vendored whoop_client)
+    "requests>=2.31",   # transport used by authlib's OAuth2Session
+    "httpx>=0.27",      # per ARCHITECTURE.md stack (available for future HTTP)
+    "watchdog>=4.0",    # folder watcher for Hevy/Samsung drops (later phases)
+    "tomli>=2.0; python_version < '3.11'",   # TOML for <3.11
+    "python-dotenv>=1.0",
+    "tzdata>=2024.1",   # ensures Asia/Dubai resolves even without system tzdb
+]
+
+[project.optional-dependencies]
+dashboard = ["streamlit>=1.35", "plotly>=5.20", "pandas>=2.2"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+# The inner `helthi/` dir is the import root (flat modules: cli, db, config, ...).
+helthi = "cli:main"
+
+[tool.setuptools]
+# Treat the inner package directory as the source root so `cli`, `db`, `config`,
+# `parsers`, `whoop_client`, etc. import as top-level modules (matches the flat
+# intra-package imports in ARCHITECTURE.md's layout).
+package-dir = { "" = "helthi" }
+
+[tool.setuptools.packages.find]
+where = ["helthi"]
+
+[tool.pytest.ini_options]
+pythonpath = ["helthi"]
+testpaths = ["tests"]

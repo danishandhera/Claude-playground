@@ -1,0 +1,38 @@
+# --- secrets ---
+.env
+*.token
+whoop_token.json
+.secrets/
+
+# --- database & data exports (never commit personal health data) ---
+*.db
+*.db-wal
+*.db-shm
+helthi.db
+
+# --- ingest drop/archive folders (keep the dirs, ignore their contents) ---
+data/inbox/**
+data/archive/**
+!data/inbox/hevy/.gitkeep
+!data/inbox/samsung/.gitkeep
+!data/archive/hevy/.gitkeep
+!data/archive/samsung/.gitkeep
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- os / editor ---
+.DS_Store
+.idea/
+.vscode/
