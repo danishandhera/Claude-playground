@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The wedge: read the device call log. Play-restricted for non-dialer apps; we sideload. -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <!-- Resolve display name / numbers from the contact lookup key. Degrades gracefully if revoked. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Runtime permission on API 33+. Requested in-app before we post the first nudge. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Re-arm the daily worker after reboot (install-time normal permission, no prompt). -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MissedCall">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MissedCall">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          Boot re-enqueue of the daily worker. Wired now (Phase 1) so the schedule survives reboot;
+          the WorkScheduler it calls does the idempotent KEEP enqueue. exported=false: system-only.
+        -->
+        <receiver
+            android:name=".work.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>

@@ -1,0 +1,3 @@
+# Copy to local.properties and point sdk.dir at your Android SDK install.
+# On macOS with Android Studio the SDK is usually here:
+sdk.dir=/Users/danishroshan/Library/Android/sdk

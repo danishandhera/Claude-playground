@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose drives the actual UI theme; this is the base activity theme (Material3 DayNight). -->
+    <style name="Theme.MissedCall" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
