@@ -19,13 +19,15 @@
       <stop offset="1" stop-color="#CBB68F" stop-opacity="0"/>
     </radialGradient>
     <g id="palm">
-      <path d="M0,0 C -4,-40 -2,-80 4,-120" stroke="#4E3620" stroke-width="9" fill="none" stroke-linecap="round"/>
-      <g fill="url(#frond2)">
-        <path d="M4,-120 C -26,-140 -60,-142 -84,-130 C -54,-134 -24,-128 4,-120 Z"/>
-        <path d="M4,-120 C 34,-142 68,-144 92,-132 C 62,-134 32,-128 4,-120 Z"/>
-        <path d="M4,-120 C -16,-150 -18,-186 -8,-212 C 2,-184 10,-150 4,-120 Z"/>
-        <path d="M4,-120 C -44,-128 -74,-150 -86,-176 C -58,-158 -26,-136 4,-120 Z"/>
-        <path d="M4,-120 C 52,-128 82,-150 94,-176 C 66,-158 34,-136 4,-120 Z"/>
+      <path d="M0,0 C -5,-42 -3,-84 5,-122" stroke="#4E3620" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <g transform="translate(5,-122)" fill="url(#frond2)">
+        <path transform="rotate(-14)" d="M0,-3 C 32,-22 70,-26 104,-8 C 70,-2 32,5 0,3 Z"/>
+        <path transform="rotate(-52)" d="M0,-3 C 30,-20 64,-24 96,-8 C 64,-2 30,5 0,3 Z"/>
+        <path transform="rotate(-90)" d="M0,-3 C 26,-18 56,-22 84,-8 C 56,-2 26,5 0,3 Z"/>
+        <path transform="rotate(-128)" d="M0,-3 C 30,-20 64,-24 96,-8 C 64,-2 30,5 0,3 Z"/>
+        <path transform="rotate(-166)" d="M0,-3 C 32,-22 70,-26 104,-8 C 70,-2 32,5 0,3 Z"/>
+        <path transform="rotate(18)" d="M0,-3 C 26,-14 54,-14 78,-2 C 54,3 26,6 0,3 Z" opacity="0.85"/>
+        <path transform="rotate(198)" d="M0,-3 C 26,-14 54,-14 78,-2 C 54,3 26,6 0,3 Z" opacity="0.85"/>
       </g>
     </g>
   </defs>
@@ -69,7 +71,10 @@
     <circle r="4" fill="#F6EDDB"/>
   </g>
 
-  <text x="432" y="158" font-family="Georgia, 'Times New Roman', serif" font-size="84" font-weight="700" fill="#F4EAD7">r/DubaiWatchExchange</text>
-  <text x="436" y="214" font-family="Verdana, Geneva, sans-serif" font-size="34" fill="#B7D19E">The UAE watch marketplace — buy · sell · trade</text>
-  <text x="436" y="258" font-family="Verdana, Geneva, sans-serif" font-size="24" fill="#D9C7A6">Timestamps · real meetups · verified reputation</text>
+  <g font-family="'Avenir Next', 'Helvetica Neue', Helvetica, 'Segoe UI', Inter, Arial, sans-serif">
+    <text x="436" y="172" font-size="50" font-weight="500" letter-spacing="7" fill="#F4EAD7">DUBAI WATCH EXCHANGE</text>
+    <rect x="440" y="196" width="240" height="2" rx="1" fill="#7FA968"/>
+    <text x="440" y="240" font-size="20" font-weight="500" letter-spacing="5" fill="#A7C68C">BUY · SELL · TRADE — UNITED ARAB EMIRATES</text>
+    <text x="442" y="286" font-size="17" font-weight="400" letter-spacing="1.5" fill="#C4AE8B">Timestamps · Real meetups · Verified reputation</text>
+  </g>
 </svg>

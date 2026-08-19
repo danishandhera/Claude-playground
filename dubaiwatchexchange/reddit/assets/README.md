@@ -8,17 +8,20 @@ Pastel desert-oasis palette — soft green on brown (locked 2026-08-19).
 ## Export to PNG (Reddit needs raster)
 Reddit's appearance settings take PNG/JPG. From this folder:
 
-```bash
-# with rsvg-convert (brew install librsvg)
-rsvg-convert -w 512  -h 512 icon.svg   > icon.png
-rsvg-convert -w 1920 -h 384 banner.svg > banner.png
+**Nothing suitable is installed on this Mac yet** (checked 2026-08-19 — no `rsvg-convert`, no ImageMagick). Install one first:
 
-# or with ImageMagick
-magick -background none icon.svg   -resize 512x512  icon.png
-magick -background none banner.svg -resize 1920x384 banner.png
+```bash
+brew install librsvg          # smallest, best SVG fidelity
+
+rsvg-convert -w 512  -h 512 icon.svg   -o icon.png
+rsvg-convert -w 1920 -h 384 banner.svg -o banner.png
 ```
 
-No tools installed? Open the `.svg` in a browser and screenshot, or drop it into any online SVG→PNG converter.
+Alternative if you'd rather not install anything: open the `.svg` in Chrome/Safari, or use any online SVG→PNG converter.
+
+⚠️ **Don't use `qlmanage` for the final export.** It works for a quick preview but pads output to a square (a 1920×384 banner comes out 1920×1920 with white bars), which Reddit will letterbox.
+
+**Fonts:** the banner uses `Avenir Next` → `Helvetica Neue` → Arial. Both Avenir Next and Helvetica Neue ship with macOS, so it renders as designed here. If you ever export on another machine and the spacing looks off, it fell back to Arial — install the font or convert the text to outlines first.
 
 ## Where they go in Reddit
 Mod Tools → Community Appearance:
