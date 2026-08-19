@@ -32,8 +32,8 @@ Paste `wiki/index.md`'s short version as markdown; old Reddit doesn't use widget
 ## Visual assets — pastel desert-oasis palette (locked 2026-08-19)
 Soft green on brown. Assets are in `reddit/assets/` (`icon.svg`, `banner.svg`) — see `reddit/assets/README.md` to export PNGs.
 
-- **Icon:** a watch dial (10:10 pose) sitting over a small oasis (dune + water + palm), brown bezel, cream dial, soft-green hands.
-- **Banner:** brown gradient ground, sand dunes, an oasis pool with palms on the right, the watch roundel + wordmark on the left.
+- **Icon:** a wristwatch — leather strap with stitching running off the top and bottom edges, crown at 3 o'clock, brown bezel, cream dial in the 10:10 pose with a small oasis (dune + water + palm) on the dial. The strap stays inside Reddit's circular crop, so nothing important is cut off. Note the dial scene turns to mush below ~64px; that's expected in feed-size renders.
+- **Banner:** brown gradient ground, sand dunes, an oasis pool with date palms on the right, the watch roundel on the left, wordmark set in spaced uppercase `Avenir Next`.
 
 **Reddit theme colours to set (Community Appearance → Colors):**
 - **Base / header background:** brown `#402D1D`
