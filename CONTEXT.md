@@ -39,6 +39,7 @@ User-level agents in `~/.claude/agents/` (laptop only — not present in a cloud
 - **Not synced to mobile:** local `~/.claude` memory and the loose `~/Claude-home` top-level files (US-Visa tracker/letters, etc.). This repo + `STATUS.md` are the cross-device continuity mechanism.
 
 ## Cross-device workflow
-- Continue work from a phone via **claude.ai/code** connected to this repo.
+- **Planned home-server model (decided 2026-08-16):** an always-on **Intel iMac** becomes the brain — runs Claude Code in `tmux`, the canonical repo + memory, and all project services; MacBook + phone attach to the same live session over Tailscale. See [`HOME-SERVER.md`](HOME-SERVER.md). Not yet built.
+- Interim / fallback: continue work from a phone via **claude.ai/code** connected to this repo.
 - First move in any session: **read `STATUS.md`**, then ask "where do you want to focus?"
 - When wrapping up on any device, **update `STATUS.md`** so the handoff survives.
