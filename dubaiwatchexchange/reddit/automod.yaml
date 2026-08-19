@@ -1,0 +1,126 @@
+# =====================================================================
+# r/DubaiWatchExchange — AutoModerator configuration
+# Paste into: https://www.reddit.com/r/dubaiwatchexchange/wiki/config/automoderator
+# Docs: https://www.reddit.com/wiki/automoderator/full-documentation
+# Test regex changes on a private test post before relying on them.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 1) Require a valid title tag. Remove + explain if missing.
+#    (~title = title does NOT match the allowed-tags pattern.)
+# ---------------------------------------------------------------------
+---
+type: submission
+~title (regex): '^\s*\[(WTS|WTB|WTT|WTI|PSA|MODPOST)\]'
+action: remove
+action_reason: "Missing/invalid title tag"
+comment_stickied: true
+comment: |
+    **Removed — your title needs a tag.**
+
+    Every post must start with one of: **[WTS]** (sell), **[WTB]** (buy),
+    **[WTT]** (trade), **[WTI]** (info/opinion), or **[PSA]** (warning).
+
+    Please repost using the format:
+    `[WTS] Brand Model (Ref) — Price AED — Emirate`
+    Example: `[WTS] Tudor Black Bay 58 — 11,500 AED — Dubai`
+---
+
+# ---------------------------------------------------------------------
+# 2) WTS/WTT must contain a price signal (a number, or AED/dhs/dirham).
+# ---------------------------------------------------------------------
+type: submission
+title (regex): '^\s*\[(WTS|WTT)\]'
+~title (regex): '(aed|dhs|dh\b|dirham|\$|\d{3,})'
+action: remove
+action_reason: "WTS/WTT with no price"
+comment_stickied: true
+comment: |
+    **Removed — WTS/WTT posts must list a price in AED.**
+
+    "DM for price" / "make offer" alone isn't allowed. Please repost with a
+    number, e.g. `... — 24,000 AED — Dubai`. A USD equivalent is optional.
+---
+
+# ---------------------------------------------------------------------
+# 3) Timestamp reminder on every WTS/WTT (sticky auto-comment).
+#    (Reminder + manual mod check; images can't be reliably auto-verified.)
+# ---------------------------------------------------------------------
+type: submission
+title (regex): '^\s*\[(WTS|WTT)\]'
+comment_stickied: true
+comment: |
+    ⏱️ **Sellers:** this post needs a **timestamp** — a photo of the watch next
+    to a handwritten note with **u/{{author}}** and **today's date**. No
+    timestamp = removed. Guide: /r/dubaiwatchexchange/wiki/timestamps
+
+    🛡️ **Buyers:** meet in person in a safe public place, inspect before paying,
+    and check the seller's transaction flair. There is **no PayPal protection**
+    here. Report anything suspicious. Guide: /r/dubaiwatchexchange/wiki/scam-prevention
+---
+
+# ---------------------------------------------------------------------
+# 4) Account-age / karma gate — hold new & low-karma authors for review.
+#    'filter' = sent to modqueue (not public, not auto-removed).
+# ---------------------------------------------------------------------
+type: submission
+author:
+    combined_karma: "< 50"
+action: filter
+action_reason: "Low combined karma (<50) — possible throwaway"
+---
+
+type: submission
+author:
+    account_age: "< 21 days"
+action: filter
+action_reason: "New account (<21 days) — review before approving"
+---
+
+# ---------------------------------------------------------------------
+# 5) Counterfeit / replica terms — report to modqueue (Rule 6).
+# ---------------------------------------------------------------------
+type: any
+body+title (regex, includes-word): ['rep', 'reps', 'replica', 'replicas', 'super clone', 'superclone', 'clone', 'aaa grade', 'aaa quality', 'homage for sale', 'first copy', 'master copy']
+action: report
+action_reason: "Possible counterfeit/replica reference (Rule 6)"
+---
+
+# ---------------------------------------------------------------------
+# 6) Classic scam patterns — report to modqueue for a human look.
+# ---------------------------------------------------------------------
+type: any
+body (regex, includes): ['western union', 'gift card', 'gift cards', 'crypto only', 'usdt only', 'no meet', 'no meetup', 'shipping only', 'wise only', 'payment first', 'pay first then', 'god bless', 'text me on whatsapp \+', 'telegram @']
+action: report
+action_reason: "Possible scam pattern — review"
+---
+
+# ---------------------------------------------------------------------
+# 7) Off-site marketplace links in submissions — report (Rule 11).
+# ---------------------------------------------------------------------
+type: submission
+domain: ['dubizzle.com', 'chrono24.com', 'ebay.com', 'facebook.com', 'instagram.com', 'wa.me']
+action: report
+action_reason: "External marketplace/contact link — review"
+---
+
+# ---------------------------------------------------------------------
+# 8) Auto-flair SOLD when the OP comments that it sold.
+# ---------------------------------------------------------------------
+type: comment
+body (regex): '\b(sold|deal done|gone|no longer available)\b'
+is_top_level: true
+author:
+    is_submitter: true
+parent_submission:
+    title (regex): '^\s*\[(WTS|WTT)\]'
+set_flair:
+    text: "SOLD"
+    css_class: "sold"
+overwrite_flair: true
+action: comment
+comment: |
+    Marked as **SOLD** — thanks! If you traded with someone here, please both
+    confirm in the reputation thread so you each get credit:
+    /r/dubaiwatchexchange/wiki/reputation
+---

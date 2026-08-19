@@ -2,7 +2,7 @@
 
 _Living dashboard of all projects, maintained by the GM. Ask "where are we?" anytime._
 
-**Last updated:** 2026-08-01
+**Last updated:** 2026-08-19
 
 Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating · 🚢 shipped · ⏸ paused
 
@@ -19,6 +19,7 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 | **beanbuds** | 📐 | Review blueprint + answer 5 open Qs, then build v1 (PWA) | **User** | None |
 | **Stash** | 📐 | Confirm 2 blueprint decisions + request IG export | **User** | Waiting on export file |
 | **helthi** | 💡 → 📐 | Confirm tz + HR-zone model; then Phase 0/1 build (Whoop spine) | Team/User | Samsung export sample (gates Phase 3) |
+| **DubaiWatchExchange** | 🔨 → 🧪 | Work the GO-LIVE checklist in the sub (rules/AutoMod/wiki/flairs) | **User** | None |
 
 ---
 
@@ -85,3 +86,12 @@ Legend — Phase: 💡 idea · 📐 design · 🔨 building · 🧪 validating �
 2. firsttimemoms: first shop products to add.
 3. firsttimemoms: WhatsApp business number (real number vs. "contact directly" link).
 4. Sell Local: proceed with Frontend styling + Reviewer finish now?
+5. DubaiWatchExchange: final list of Dubai classifieds subs to monitor (gates Phase 2 build).
+
+## DubaiWatchExchange — UAE watch buy/sell/trade subreddit (r/DubaiWatchExchange)
+- **State:** Sub is live but empty; the US-heavy r/watchexchange localised for UAE. Phase 1 content authored (rules, AutoMod, flairs+reputation, wiki x8, sidebar, removal reasons, pinned posts, brand assets). **Ready to paste into Reddit.**
+- **Location:** `dubaiwatchexchange/` · content in `reddit/`, go-live checklist in `README.md`
+- **Decisions (2026-08-19):** AutoMod-first (no hosting); grow via monitor + manual invite (ToS-safe — no auto-repost/auto-DM); AutoMod thresholds kept at <21d / <50 karma → held for review.
+- **Brand:** pastel desert-oasis — soft green `#7FA968` on brown `#402D1D`; `icon.svg` + `banner.svg` in `reddit/assets/` (export to PNG before upload).
+- **Next (user):** run the GO-LIVE checklist (~30–45 min), post/pin the two threads in `reddit/pinned-posts.md`, seed 2–3 real listings, then test AutoMod.
+- **Phase 2 (designed, not built):** classifieds monitor → manual invite (`monitor/PLAN.md`); Claude reputation bot + scam-triage.
