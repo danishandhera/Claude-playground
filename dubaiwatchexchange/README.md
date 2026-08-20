@@ -21,13 +21,17 @@ monitor/
 ```
 
 ## GO-LIVE checklist (do these in the sub, ~30–45 min)
+_Progress as of 2026-08-20: sub created, images + colours done. Everything below is still open._
+
+**Do the wiki before AutoMod** — AutoMod's auto-comments link to `/wiki/timestamps` and `/wiki/scam-prevention`, so those pages should exist first or the links 404 on your very first post.
 - [ ] **Rules:** Mod Tools → Rules → add the 12 rules from `reddit/RULES.md`.
 - [ ] **AutoMod:** open `https://www.reddit.com/r/dubaiwatchexchange/wiki/config/automoderator`, paste `reddit/automod.yaml`, save.
 - [ ] **Post flair:** create the templates in `reddit/flairs.md` (allow user assignment on WTS/WTB/WTT/WTI/Discussion).
 - [ ] **User flair:** create the reputation templates; enable user flair.
 - [ ] **Wiki:** create each page under `reddit/wiki/` at the matching URL (`/wiki/rules`, `/wiki/how-to-sell`, …). Set wiki to mod-edit only.
-- [ ] **Appearance:** set description + sidebar/widgets from `reddit/community-appearance.md`; set colours (base `#402D1D`, highlight `#7FA968`).
-- [ ] **Assets:** export `reddit/assets/icon.svg` + `banner.svg` to PNG (`reddit/assets/README.md`) and upload as the icon + banner.
+- [x] **Colours:** base `#E7D5B8` (sand), highlight `#7FA968`. ~~`#402D1D`~~ was the pre-2026-08-20 dark base.
+- [x] **Assets:** icon + desktop/mobile banners uploaded.
+- [ ] **Appearance (text):** still to do — community description + sidebar/widgets from `reddit/community-appearance.md`.
 - [ ] **Removal reasons:** add the ones in `reddit/removal-reasons.md`.
 - [ ] **Seed content:** post & pin the two threads in `reddit/pinned-posts.md` (Welcome + Monthly Confirmation); add 2–3 of your own real listings so it's not empty.
 - [ ] **Test:** make a throwaway `[WTS]` post with no tag / no price to confirm AutoMod removes and comments correctly.
