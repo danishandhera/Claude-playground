@@ -3,12 +3,13 @@
 Pastel desert-oasis palette — soft green on brown (locked 2026-08-19).
 
 - `icon.svg` — square subreddit icon/avatar. Reddit crops to a circle; the design is safe for that.
-- `banner.svg` — wide banner (10:2.5 ratio, 1920×384).
+- `banner.svg` — desktop banner (1920×384).
+- `banner-mobile.svg` — mobile banner (1080×360, 3:1). The Reddit app overlays the community avatar bottom-left, so that corner is deliberately kept clear and the watch is left to the icon rather than duplicated.
 
 ## Export to PNG (Reddit needs raster)
 Reddit's appearance settings take PNG/JPG. From this folder:
 
-**`banner.png` (1920x384) and `icon.png` (512x512) are already exported in this folder** — upload those to Reddit directly. Only re-run the steps below if you change the SVGs.
+**`banner.png` (1920x384), `banner-mobile.png` (1080x360) and `icon.png` (512x512) are already exported in this folder** — upload those to Reddit directly. Only re-run the steps below if you change the SVGs.
 
 ### No-install method (built into macOS)
 
@@ -16,6 +17,10 @@ Reddit's appearance settings take PNG/JPG. From this folder:
 
 ```bash
 qlmanage -t -s 1920 -o . banner.svg && sips -c 384 1920 banner.svg.png --out banner.png && rm banner.svg.png
+```
+
+```bash
+qlmanage -t -s 1080 -o . banner-mobile.svg && sips -c 360 1080 banner-mobile.svg.png --out banner-mobile.png && rm banner-mobile.svg.png
 ```
 
 ```bash
@@ -39,7 +44,8 @@ Better fidelity on gradients and text, but it is an install. Neither `rsvg-conve
 ## Where they go in Reddit
 Mod Tools → Community Appearance:
 - **Avatar / community icon** → `icon.png`
-- **Banner (desktop)** → `banner.png`  (also set the mobile banner image)
+- **Banner (desktop)** → `banner.png`
+- **Banner (mobile)** → `banner-mobile.png`  — confirm the size Reddit's uploader asks for; 1080x360 is the common recommendation but Reddit has changed it before
 - **Colors** → base/header `#402D1D`, highlight `#7FA968`
 
 Sizes recommended by Reddit shift over time; if it wants a taller banner, re-export at the requested height — the SVG scales cleanly.

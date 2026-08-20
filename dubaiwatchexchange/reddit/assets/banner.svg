@@ -2,11 +2,11 @@
   <title>r/DubaiWatchExchange banner</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6B4E37"/>
-      <stop offset="1" stop-color="#402D1D"/>
+      <stop offset="0" stop-color="#E7D5B8"/>
+      <stop offset="1" stop-color="#CDB18E"/>
     </linearGradient>
     <linearGradient id="ring2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#7A5B3E"/><stop offset="1" stop-color="#42301F"/>
+      <stop offset="0" stop-color="#B58F68"/><stop offset="1" stop-color="#856746"/>
     </linearGradient>
     <radialGradient id="dial2" cx="50%" cy="40%" r="72%">
       <stop offset="0" stop-color="#F6EDDB"/><stop offset="1" stop-color="#E4D3B6"/>
@@ -15,11 +15,11 @@
       <stop offset="0" stop-color="#A7C68C"/><stop offset="1" stop-color="#6E9A57"/>
     </linearGradient>
     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#CBB68F" stop-opacity="0.45"/>
-      <stop offset="1" stop-color="#CBB68F" stop-opacity="0"/>
+      <stop offset="0" stop-color="#FFF6E4" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FFF6E4" stop-opacity="0"/>
     </radialGradient>
     <g id="palm">
-      <path d="M0,0 C -5,-42 -3,-84 5,-122" stroke="#4E3620" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M0,0 C -5,-42 -3,-84 5,-122" stroke="#8E6E4B" stroke-width="9" fill="none" stroke-linecap="round"/>
       <g transform="translate(5,-122)" fill="url(#frond2)">
         <path transform="rotate(-14)" d="M0,-3 C 32,-22 70,-26 104,-8 C 70,-2 32,5 0,3 Z"/>
         <path transform="rotate(-52)" d="M0,-3 C 30,-20 64,-24 96,-8 C 64,-2 30,5 0,3 Z"/>
@@ -35,19 +35,19 @@
   <rect width="1920" height="384" fill="url(#bg)"/>
   <circle cx="1500" cy="130" r="270" fill="url(#glow)"/>
 
-  <path d="M0,300 C 360,260 720,320 1080,290 C 1440,262 1740,300 1920,286 L1920,384 L0,384 Z" fill="#5A4230"/>
-  <path d="M0,336 C 420,312 840,352 1260,330 C 1560,314 1920,340 1920,340 L1920,384 L0,384 Z" fill="#6E5238"/>
+  <path d="M0,300 C 360,260 720,320 1080,290 C 1440,262 1740,300 1920,286 L1920,384 L0,384 Z" fill="#C0A179"/>
+  <path d="M0,336 C 420,312 840,352 1260,330 C 1560,314 1920,340 1920,340 L1920,384 L0,384 Z" fill="#AE8F66"/>
 
-  <ellipse cx="1500" cy="346" rx="240" ry="20" fill="#7FB097" opacity="0.9"/>
-  <ellipse cx="1500" cy="344" rx="150" ry="11" fill="#A7CDB4" opacity="0.7"/>
+  <ellipse cx="1500" cy="346" rx="240" ry="20" fill="#8FC8B0" opacity="0.9"/>
+  <ellipse cx="1500" cy="344" rx="150" ry="11" fill="#BEDFCB" opacity="0.7"/>
 
   <use href="#palm" transform="translate(1430,338)"/>
   <use href="#palm" transform="translate(1636,342) scale(0.8)"/>
   <use href="#palm" transform="translate(1330,344) scale(0.62)"/>
 
   <g transform="translate(230,192)">
-    <circle r="150" fill="url(#ring2)" stroke="#2E2015" stroke-width="5"/>
-    <circle r="128" fill="#2E2015"/>
+    <circle r="150" fill="url(#ring2)" stroke="#7A5C3C" stroke-width="5"/>
+    <circle r="128" fill="#7A5C3C"/>
     <circle r="116" fill="url(#dial2)"/>
     <g fill="#6E5236">
       <rect id="tk2" x="-6" y="-104" width="10" height="22" rx="5"/>
@@ -67,14 +67,14 @@
       <line x1="0" y1="0" x2="-54" y2="-31" stroke="#5E8446" stroke-width="13"/>
       <line x1="0" y1="0" x2="76" y2="-44" stroke="#7FA968" stroke-width="10"/>
     </g>
-    <circle r="11" fill="#42301F"/>
+    <circle r="11" fill="#5E4529"/>
     <circle r="4" fill="#F6EDDB"/>
   </g>
 
   <g font-family="'Avenir Next', 'Helvetica Neue', Helvetica, 'Segoe UI', Inter, Arial, sans-serif">
-    <text x="436" y="172" font-size="50" font-weight="500" letter-spacing="7" fill="#F4EAD7">DUBAI WATCH EXCHANGE</text>
-    <rect x="440" y="196" width="240" height="2" rx="1" fill="#7FA968"/>
-    <text x="440" y="240" font-size="20" font-weight="500" letter-spacing="5" fill="#A7C68C">BUY · SELL · TRADE — UNITED ARAB EMIRATES</text>
-    <text x="442" y="286" font-size="17" font-weight="400" letter-spacing="1.5" fill="#C4AE8B">Timestamps · Real meetups · Verified reputation</text>
+    <text x="436" y="172" font-size="50" font-weight="500" letter-spacing="7" fill="#42301D">DUBAI WATCH EXCHANGE</text>
+    <rect x="440" y="196" width="240" height="2" rx="1" fill="#6E9A57"/>
+    <text x="440" y="240" font-size="20" font-weight="500" letter-spacing="5" fill="#4F7A3C">BUY · SELL · TRADE — UNITED ARAB EMIRATES</text>
+    <text x="442" y="286" font-size="17" font-weight="400" letter-spacing="1.5" fill="#6E5945">Timestamps · Real meetups · Verified reputation</text>
   </g>
 </svg>
