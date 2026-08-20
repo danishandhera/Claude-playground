@@ -8,18 +8,31 @@ Pastel desert-oasis palette — soft green on brown (locked 2026-08-19).
 ## Export to PNG (Reddit needs raster)
 Reddit's appearance settings take PNG/JPG. From this folder:
 
-**Nothing suitable is installed on this Mac yet** (checked 2026-08-19 — no `rsvg-convert`, no ImageMagick). Install one first:
+**`banner.png` (1920x384) and `icon.png` (512x512) are already exported in this folder** — upload those to Reddit directly. Only re-run the steps below if you change the SVGs.
+
+### No-install method (built into macOS)
+
+`qlmanage` renders it and `sips` fixes the padding. Both ship with macOS — nothing to install:
 
 ```bash
-brew install librsvg          # smallest, best SVG fidelity
+qlmanage -t -s 1920 -o . banner.svg && sips -c 384 1920 banner.svg.png --out banner.png && rm banner.svg.png
+```
 
+```bash
+qlmanage -t -s 512 -o . icon.svg && mv icon.svg.png icon.png
+```
+
+The catch `qlmanage` has on its own: it pads output to a square, so a 1920x384 banner comes out 1920x1920 with white bars. The `sips -c 384 1920` crop above removes them (it crops centred, which lands exactly on the artwork). Square sources like the icon need no crop.
+
+### If you'd rather use a real renderer
+
+```bash
+brew install librsvg
 rsvg-convert -w 512  -h 512 icon.svg   -o icon.png
 rsvg-convert -w 1920 -h 384 banner.svg -o banner.png
 ```
 
-Alternative if you'd rather not install anything: open the `.svg` in Chrome/Safari, or use any online SVG→PNG converter.
-
-⚠️ **Don't use `qlmanage` for the final export.** It works for a quick preview but pads output to a square (a 1920×384 banner comes out 1920×1920 with white bars), which Reddit will letterbox.
+Better fidelity on gradients and text, but it is an install. Neither `rsvg-convert` nor ImageMagick was present as of 2026-08-20.
 
 **Fonts:** the banner uses `Avenir Next` → `Helvetica Neue` → Arial. Both Avenir Next and Helvetica Neue ship with macOS, so it renders as designed here. If you ever export on another machine and the spacing looks off, it fell back to Arial — install the font or convert the text to outlines first.
 
