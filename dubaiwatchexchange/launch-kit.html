@@ -1,0 +1,732 @@
+<title>DubaiWatchExchange Launch Kit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --sand-0:#F4EBDA; --sand-1:#EADCC2; --sand-2:#E0CEAF;
+  --ink:#2B2119; --ink-2:#6E5C48; --ink-3:#8A7860;
+  --rule:#D8C6A6; --rule-soft:#E3D4B8;
+  --green:#4C7639; --green-2:#5E8C46; --green-tint:#DFE9D2;
+  --code-bg:#EFE4CE; --card:#FBF5E9; --shadow:0 1px 2px rgba(70,50,25,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --sand-0:#191309; --sand-1:#221A10; --sand-2:#2D2317;
+    --ink:#F1E6D2; --ink-2:#BCA98C; --ink-3:#95836A;
+    --rule:#3A2E1F; --rule-soft:#31261A;
+    --green:#9CC97E; --green-2:#87B769; --green-tint:#25301C;
+    --code-bg:#20180E; --card:#221A10; --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --sand-0:#191309; --sand-1:#221A10; --sand-2:#2D2317;
+  --ink:#F1E6D2; --ink-2:#BCA98C; --ink-3:#95836A;
+  --rule:#3A2E1F; --rule-soft:#31261A;
+  --green:#9CC97E; --green-2:#87B769; --green-tint:#25301C;
+  --code-bg:#20180E; --card:#221A10; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sand-0);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Archivo,"IBM Plex Sans",system-ui,sans-serif;text-wrap:balance;margin:0}
+code,pre{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--green);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:3px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+header.top{padding:56px 0 30px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--green);margin:0 0 14px}
+h1{font-size:clamp(34px,5vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.lede{max-width:63ch;color:var(--ink-2);font-size:17px;margin:16px 0 0}
+
+.done{margin:26px 0 0;padding:16px 18px;background:var(--green-tint);
+  border:1px solid var(--rule);border-radius:10px}
+.done h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:0 0 8px}
+.done ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:15px}
+.warn{margin:18px 0 0;padding:14px 16px;background:var(--card);
+  border:1px solid var(--rule);border-left:4px solid var(--green);border-radius:0 8px 8px 0}
+.warn strong{color:var(--ink)}
+
+.progwrap{position:sticky;top:0;z-index:20;background:var(--sand-0);
+  border-bottom:1px solid var(--rule);padding:12px 0;margin-bottom:0}
+.progrow{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px}
+.bar{flex:1;height:6px;background:var(--sand-2);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
+.pcount{font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.reset{background:none;border:1px solid var(--rule);color:var(--ink-3);font-size:12px;
+  padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit}
+.reset:hover{color:var(--ink);border-color:var(--ink-3)}
+
+.cols{display:grid;grid-template-columns:216px 1fr;gap:44px;margin-top:36px;align-items:start}
+nav.rail{position:sticky;top:76px}
+nav.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.rail a{display:flex;gap:10px;align-items:flex-start;padding:7px 8px;border-radius:7px;
+  color:var(--ink-2);text-decoration:none;font-size:13.5px;line-height:1.35}
+nav.rail a:hover{background:var(--sand-1);color:var(--ink)}
+.nnum{flex:none;width:20px;height:20px;border-radius:5px;background:var(--sand-2);color:var(--ink-2);
+  font-family:Archivo,sans-serif;font-size:11px;font-weight:600;display:grid;place-items:center;margin-top:1px}
+.nnum.on{background:var(--green);color:var(--sand-0)}
+
+.step{padding:34px 0;border-bottom:1px solid var(--rule-soft);scroll-margin-top:76px}
+.shead{display:flex;gap:14px;align-items:flex-start}
+.tick{flex:none;cursor:pointer;margin-top:4px}
+.tick input{position:absolute;opacity:0;width:0;height:0}
+.box{display:block;width:22px;height:22px;border:1.5px solid var(--rule);border-radius:6px;
+  background:var(--card);transition:.15s}
+.tick input:checked+.box{background:var(--green);border-color:var(--green)}
+.tick input:checked+.box::after{content:"";display:block;width:6px;height:11px;margin:3px auto;
+  border:solid var(--sand-0);border-width:0 2px 2px 0;transform:rotate(43deg)}
+.tick input:focus-visible+.box{outline:2px solid var(--green);outline-offset:2px}
+.seyebrow{font-family:Archivo,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--green);margin-bottom:5px}
+.dot{opacity:.5}
+.step h2{font-size:25px;font-weight:600;letter-spacing:-.01em}
+.where{margin:7px 0 0;color:var(--ink-2);font-size:14.5px}
+.where code{background:var(--code-bg);padding:1px 5px;border-radius:4px;font-size:13px}
+.why{margin:16px 0 0;max-width:66ch;color:var(--ink-2)}
+.step.done-step{opacity:.55}
+
+.tip{max-width:66ch;margin:16px 0 0;font-size:15px;color:var(--ink-2)}
+.tip code{background:var(--code-bg);padding:1px 5px;border-radius:4px;font-size:13px}
+.checks{max-width:66ch;color:var(--ink-2);padding-left:20px}
+.checks li{margin:8px 0}
+.checks code{background:var(--code-bg);padding:1px 5px;border-radius:4px;font-size:13px}
+
+.block{margin:16px 0 0;border:1px solid var(--rule);border-radius:9px;background:var(--card);overflow:hidden}
+.bnote{margin:0;padding:8px 13px;font-size:13px;color:var(--ink-3);border-bottom:1px solid var(--rule-soft)}
+.bhead{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:8px 10px 8px 13px;border-bottom:1px solid var(--rule-soft);background:var(--sand-1)}
+.blabel{font-family:Archivo,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-2)}
+.copy{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;cursor:pointer;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);
+  padding:5px 13px;border-radius:6px;transition:.15s;white-space:nowrap}
+.copy:hover{border-color:var(--green);color:var(--green)}
+.copy.ok{background:var(--green);border-color:var(--green);color:var(--sand-0)}
+pre{margin:0;padding:13px;overflow-x:auto;font-size:12.5px;line-height:1.62;background:var(--code-bg)}
+pre code{white-space:pre;color:var(--ink)}
+
+details{margin:10px 0 0;border:1px solid var(--rule);border-radius:9px;background:var(--card);overflow:hidden}
+summary{cursor:pointer;padding:11px 14px;display:flex;justify-content:space-between;gap:12px;
+  align-items:center;font-size:14.5px;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:"IBM Plex Mono",monospace;color:var(--green);
+  font-weight:600;margin-right:9px}
+details[open] summary::before{content:"–"}
+summary>span:first-of-type{flex:1;font-family:"IBM Plex Mono",monospace;font-size:13.5px}
+summary:hover{background:var(--sand-1)}
+.dmeta{font-size:12.5px;color:var(--ink-3)}
+.dbody{padding:0 13px 14px;border-top:1px solid var(--rule-soft)}
+.dbody .block{margin-top:13px}
+
+.rules{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.rule{display:flex;gap:13px;padding:14px;border:1px solid var(--rule);border-radius:9px;background:var(--sand-1)}
+.rnum{flex:none;width:26px;height:26px;border-radius:7px;background:var(--green);color:var(--sand-0);
+  font-family:Archivo,sans-serif;font-weight:700;font-size:13px;display:grid;place-items:center}
+.rbody{flex:1;min-width:0}
+.rbody .block:first-child{margin-top:0}
+
+footer.end{padding:40px 0 0;margin-top:10px}
+footer.end h2{font-size:23px;margin-bottom:12px}
+footer.end p,footer.end li{color:var(--ink-2);max-width:66ch}
+footer.end ul{padding-left:19px}
+.sig{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule);
+  font-size:13px;color:var(--ink-3)}
+
+@media (max-width:900px){
+  .cols{grid-template-columns:1fr;gap:0}
+  nav.rail{display:none}
+  header.top{padding-top:36px}
+  .rule{flex-direction:column;gap:9px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">r/DubaiWatchExchange</p>
+  <h1>Launch Kit</h1>
+  <p class="lede">Everything left to stand the subreddit up, in the order it has to happen. Each block below is paste-ready — copy it, switch to Reddit, paste, come back. About 35 minutes of setup, plus the seeding in step 9, which is the part that actually decides whether the sub lives.</p>
+
+  <div class="done">
+    <h3>Already done</h3>
+    <ul>
+      <li>Subreddit created and live</li>
+      <li>Icon, desktop banner and mobile banner uploaded</li>
+      <li>Theme colours set</li>
+    </ul>
+  </div>
+
+  <div class="warn">
+    <strong>Check your base colour first.</strong> It should be sand <code>#E7D5B8</code> with highlight <code>#7FA968</code>. If you set colours before the palette was lightened, you may still have the old near-black brown <code>#402D1D</code> sitting behind the new pastel banner.
+  </div>
+</header>
+</div>
+
+<div class="progwrap">
+  <div class="progrow">
+    <span class="pcount">0 / 10 done</span>
+    <div class="bar"><div class="fill"></div></div>
+    <button class="reset" type="button">Reset</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="cols">
+  <nav class="rail" aria-label="Steps"><ol><li><a href="#step1"><span class="nnum" data-nav="1">1</span>Build the wiki</a></li><li><a href="#step2"><span class="nnum" data-nav="2">2</span>Add the 12 rules</a></li><li><a href="#step3"><span class="nnum" data-nav="3">3</span>Install AutoModerator</a></li><li><a href="#step4"><span class="nnum" data-nav="4">4</span>Create post flairs</a></li><li><a href="#step5"><span class="nnum" data-nav="5">5</span>Create reputation user flairs</a></li><li><a href="#step6"><span class="nnum" data-nav="6">6</span>Load removal reasons</a></li><li><a href="#step7"><span class="nnum" data-nav="7">7</span>Fill in the text half of your appearance</a></li><li><a href="#step8"><span class="nnum" data-nav="8">8</span>Post and pin the two anchor threads</a></li><li><a href="#step9"><span class="nnum" data-nav="9">9</span>Seed 2–3 of your own real listings</a></li><li><a href="#step10"><span class="nnum" data-nav="10">10</span>Test AutoMod before anyone arrives</a></li></ol></nav>
+  <main>
+    <section class="step" id="step1"><div class="shead"><label class="tick"><input type="checkbox" data-step="1"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 1 <span class="dot">·</span> 10 min</div><h2>Build the wiki</h2><p class="where">Mod Tools → Wiki (enable it), then visit each URL below and hit Create</p></div></div><p class="why">Do this before AutoMod. Every WTS post gets an auto-comment linking to <code>/wiki/timestamps</code> and <code>/wiki/scam-prevention</code> — build AutoMod first and your very first listing ships with two dead links.</p><p class="tip">Create each page at <code>reddit.com/r/dubaiwatchexchange/wiki/&lt;slug&gt;</code>. When done, set the wiki to <strong>mod-edit only</strong> under Wiki settings.</p><details><summary><span>/wiki/rules</span><span class="dmeta">Rules</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/rules</span><button class="copy" type="button">Copy</button></div><pre><code># r/DubaiWatchExchange — Rules
+
+_The buying, selling &amp; trading marketplace for watches in the UAE._
+
+Post these as the subreddit&#x27;s official rules (Mod Tools → Rules). Each rule below has a **short name** (shown on the report menu) and the **full text** (shown when a user clicks it). The full versions also live in the [wiki](wiki/index.md).
+
+---
+
+### 1. Use the correct title tag
+Every post title **must** begin with one of these tags:
+- **[WTS]** — Want to Sell
+- **[WTB]** — Want to Buy
+- **[WTT]** — Want to Trade
+- **[WTI]** — Want the community&#x27;s Info / opinion (ID, value, &quot;should I buy?&quot;)
+- **[PSA]** — Public warning / scam alert (be prepared to provide proof)
+- **[MODPOST]** — Mods only
+
+Posts without a valid tag are removed automatically.
+
+### 2. Title format
+Format: `[TAG] Brand Model (Reference) — Price AED — Emirate`
+Example: `[WTS] Omega Speedmaster Professional 3861 — 24,000 AED — Dubai`
+
+WTS/WTT posts **must** include a price in **AED** (a USD equivalent is optional and welcome). &quot;DM for price&quot;, &quot;make offer&quot;, and &quot;open to offers&quot; as the *only* price are not allowed — set a number.
+
+### 3. Timestamp photos are mandatory (anti-scam cornerstone)
+Every **[WTS]** and **[WTT]** post must include a **timestamp**: a clear photo of the *actual* watch next to a handwritten note showing **your Reddit username** and **today&#x27;s date**. Stock/press images alone are not acceptable and are the single biggest scam tell. No timestamp = removed. See the [timestamp guide](wiki/timestamps.md).
+
+### 4. You must own it and be in the UAE
+No proxy sales, no &quot;my friend is selling&quot;, no drop-shipping, no sourcing-on-request. You must physically possess the watch and be located in the UAE. Dealers are welcome but **must** disclose dealer status (see Rule 9).
+
+### 5. Full, honest condition disclosure
+State: box &amp; papers (or not), year/service history, condition and flaws, and whether the piece is **grey-market / parallel import**. Non-disclosure of known faults or aftermarket parts is a bannable offence. See [Authenticity &amp; UAE specifics](wiki/authenticity-uae.md).
+
+### 6. No counterfeits, replicas, &quot;reps&quot;, or franken-watches sold as genuine
+Zero tolerance. Offering, requesting, or linking replicas (&quot;rep&quot;, &quot;super clone&quot;, &quot;AAA&quot;) is an **instant permanent ban** and a report to Reddit. Aftermarket/aftermarket-modified parts must be explicitly disclosed on genuine pieces.
+
+### 7. Trade safely — this is a cash market, not PayPal
+There is **no buyer-protection layer** like PayPal G&amp;S here. The community strongly recommends **in-person meetups** in safe public places (mall concourses, DIFC, bank lobbies) with cash or instant bank transfer, and inspecting the watch before paying. If you ship, you accept the risk. Read [Scam Prevention](wiki/scam-prevention.md) before your first deal.
+
+### 8. Build and respect reputation
+Confirmed trades earn a transaction-count user flair via our [reputation system](wiki/reputation.md). Faking feedback, sock-puppet confirmations, or trading feedback for favours = ban. Check a counterparty&#x27;s rep before dealing.
+
+### 9. Dealers must self-identify
+Businesses, resellers, and high-volume flippers must set the **Dealer** user flair and disclose it in every listing. Undisclosed commercial selling behind a &quot;private seller&quot; front is removed.
+
+### 10. One live listing per item; mark it [SOLD]
+No duplicate simultaneous listings for the same watch. Bump no more than once every 48 hours. When it sells, edit the title/flair to **SOLD**. Keep the market clean.
+
+### 11. No off-platform scams, no solicitation, no spam
+Don&#x27;t push people to sketchy off-platform &quot;deals&quot;, don&#x27;t cold-DM to circumvent public accountability, no referral spam, no unrelated self-promo. Keep negotiations in comments where possible.
+
+### 12. Be civil
+Normal reddiquette. No harassment, no doxxing, no lowball-shaming crusades. Disagree about a watch, not the person.
+
+---
+
+**Account requirements (auto-enforced):** brand-new and very low-karma accounts are automatically held for mod review before their post goes live. This is deliberate friction against throwaway scam accounts — established members won&#x27;t notice it.</code></pre></div></div></details><details><summary><span>/wiki/index</span><span class="dmeta">Index (wiki home)</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/index</span><button class="copy" type="button">Copy</button></div><pre><code># r/DubaiWatchExchange Wiki
+
+Welcome to the UAE watch marketplace. **Read these before your first deal.**
+
+- 📜 [Rules](rules) — the full ruleset
+- 💸 [How to Sell](how-to-sell) — post format, timestamps, pricing
+- 🛒 [How to Buy](how-to-buy) — vetting sellers, meeting safely
+- 🛡️ [Scam Prevention](scam-prevention) — every scam we&#x27;ve seen and how to dodge it
+- ⭐ [Reputation &amp; Feedback](reputation) — how transaction flair works
+- ⏱️ [Timestamp Guide](timestamps) — how to prove you own the watch
+- 🇦🇪 [Authenticity &amp; UAE specifics](authenticity-uae) — grey market, papers, servicing, customs
+- ❓ [FAQ](faq)
+
+## The 30-second version
+1. Title: `[WTS] Brand Model (Ref) — Price AED — Emirate`
+2. Sellers post a **timestamp** (watch + handwritten note with your username &amp; date).
+3. Price in **AED**, condition honest, box/papers stated.
+4. **Meet in person**, inspect, pay cash/transfer. No PayPal protection exists here.
+5. Confirm your trades to build **reputation flair**. No fakes, ever.
+
+_Mods maintain this wiki. Suggest edits via modmail._</code></pre></div></div></details><details><summary><span>/wiki/how-to-sell</span><span class="dmeta">How to Sell</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/how-to-sell</span><button class="copy" type="button">Copy</button></div><pre><code># How to Sell
+
+## 1. Title it correctly
+`[WTS] Brand Model (Reference) — Price AED — Emirate`
+Example: `[WTS] Rolex Explorer 124270 — 42,000 AED — Abu Dhabi`
+
+## 2. Photos (this makes or breaks your sale)
+- 5+ clear, well-lit photos of the **actual** watch: dial, caseback, clasp, side profile, any flaws.
+- The **timestamp** is mandatory: a photo of the watch next to a handwritten note showing **your Reddit username** and **today&#x27;s date**. No timestamp = removed. Full guide: [Timestamps](timestamps).
+- Include box, papers, extra links, receipts if you have them.
+- Host on Imgur / Reddit gallery. Don&#x27;t watermark over flaws.
+
+## 3. Write a real description
+Cover, honestly:
+- **Reference &amp; year**, movement, size.
+- **Box &amp; papers?** Card/warranty date. Service history (when, by whom).
+- **Condition:** scratches, dings, polished or unpolished, aftermarket parts (disclose!), grey-market/parallel status.
+- **Price in AED** (add USD if you like) and whether it&#x27;s firm.
+- **Meetup:** which emirate, willing-to-travel, in-person only vs. shipping.
+
+## 4. Price it to the local market
+UAE pricing differs from US/EU — grey market is huge, and box/papers matter. Check recent sold posts here and Chrono24 UAE listings for a sanity check. Overpriced listings just sit.
+
+## 5. Close it out
+- Negotiate in comments where possible (public accountability protects you too).
+- When sold, comment **&quot;sold&quot;** (AutoMod flairs it) and edit your title to SOLD.
+- **Confirm the trade** in the reputation thread so you both earn flair: [Reputation](reputation).
+
+## Seller safety
+- Meet in a busy public place; a mall, DIFC, or a bank lobby if cash is involved.
+- Count cash / confirm the transfer *landed in your account* before handing over the watch — instant-transfer &quot;screenshots&quot; are a classic scam.
+- Trust your gut. A pushy buyer who won&#x27;t meet is a red flag too.</code></pre></div></div></details><details><summary><span>/wiki/how-to-buy</span><span class="dmeta">How to Buy</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/how-to-buy</span><button class="copy" type="button">Copy</button></div><pre><code># How to Buy
+
+## Before you message anyone
+1. **Check their flair** — transaction count and history here. No rep isn&#x27;t disqualifying, but it means *you* set the safety terms (in-person, inspect first).
+2. **Check their post has a timestamp** with their username + date. No timestamp → don&#x27;t proceed.
+3. **Reverse-image-search** the photos (Google Lens). Stolen listings reuse photos found elsewhere online.
+4. **Read the description** for box/papers, service history, grey-market status, and flaws.
+
+## Vetting the watch
+- Ask for **extra photos on request** with a fresh handwritten note (&quot;u/theirname, [today], for u/you&quot;) — scammers who don&#x27;t have the watch can&#x27;t produce these.
+- Ask for the **caseback, movement (if applicable), serial/reference, and papers**.
+- For high-value pieces, agree to inspect at an **authorised dealer or trusted watchmaker** before money changes hands.
+
+## The meetup (strongly preferred)
+- Public, busy place. Daytime.
+- Inspect thoroughly: keep the watch in your hands while you check reference, condition, and function.
+- Pay **only after** you&#x27;re satisfied — cash, or a bank transfer you confirm has *cleared* (not just a screenshot).
+- No pressure, no &quot;someone else is coming, decide now&quot; games.
+
+## If you must ship (higher risk — you accept it)
+- Prefer sellers with strong rep here.
+- Cash-on-delivery via a courier that supports it, or an agreed escrow/trusted third party.
+- Get a video of the watch being packed with your handwritten note in frame.
+- There is **no PayPal Goods &amp; Services safety net** locally — understand you&#x27;re trusting the person.
+
+## Red flags → walk away
+Won&#x27;t meet, won&#x27;t do a fresh timestamp, price too good to be true, pushes to WhatsApp/Telegram immediately, wants payment first, &quot;shipping only&quot;, asks for Western Union / crypto / gift cards. Report it: see [Scam Prevention](scam-prevention).</code></pre></div></div></details><details><summary><span>/wiki/scam-prevention</span><span class="dmeta">Scam Prevention</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/scam-prevention</span><button class="copy" type="button">Copy</button></div><pre><code># Scam Prevention
+
+Watch trading attracts scammers because the items are small, high-value, and easy to ship. In a cash market with no PayPal protection, **your defence is proof + meeting in person + reputation.**
+
+## The golden rules
+1. **Meet in person** in a busy public place whenever possible.
+2. **Fresh timestamp on request.** Ask for a new photo of the watch next to a handwritten note with *your* username and *today&#x27;s* date. Someone who doesn&#x27;t physically have the watch cannot produce this.
+3. **Money must actually arrive.** Sellers: confirm cash is real / the transfer has *cleared into your account* before releasing the watch. Buyers: don&#x27;t pay before you&#x27;ve inspected.
+4. **Never pay first** to an unmet, unproven counterparty.
+5. **Keep it on-platform** long enough to build public accountability. Instant &quot;let&#x27;s move to WhatsApp&quot; is a red flag.
+
+## Common scams here
+- **Stolen listing / photo theft:** scammer copies real photos from another sub or Chrono24. → Reverse-image-search; demand a fresh timestamp.
+- **&quot;Shipping only, payment first&quot;:** classic. Refuse. Insist on meetup or COD/escrow.
+- **Fake payment screenshot:** doctored bank/transfer confirmation. Verify the money is in *your* account, not the screenshot.
+- **Overpayment / &quot;I&#x27;ll send extra, refund the difference&quot;:** always a scam.
+- **Counterfeit sold as genuine:** grey market is legit here, *fakes are not*. Inspect, verify serials/papers, use an AD/watchmaker for grails. See [Authenticity](authenticity-uae).
+- **Bait-and-switch at meetup:** confirm the exact reference/condition in hand before paying.
+- **Off-platform &quot;middleman&quot;/escrow you didn&#x27;t choose:** only use an escrow *you* trust.
+
+## Reporting a scammer
+1. Gather proof: screenshots of chat, usernames, links, timestamps.
+2. Message the mods (Modmail) with everything.
+3. Mods verify, then may post a **[PSA]** and ban. Don&#x27;t post unverified public accusations yourself — bring it to mods first (Rule 12).
+
+## Vetting checklist (save this)
+- [ ] Seller has transaction flair / history I can read
+- [ ] Post has a valid timestamp (their username + date)
+- [ ] Photos aren&#x27;t found elsewhere online
+- [ ] They&#x27;ll do a fresh timestamp on request
+- [ ] We&#x27;re meeting in person, or I&#x27;ve accepted shipping risk knowingly
+- [ ] Money confirmed received/cleared before the watch changes hands</code></pre></div></div></details><details><summary><span>/wiki/reputation</span><span class="dmeta">Reputation &amp; Feedback</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/reputation</span><button class="copy" type="button">Copy</button></div><pre><code># Reputation &amp; Feedback
+
+Reputation is the backbone of trust here. Your **transaction-count user flair** shows how many deals you&#x27;ve completed *with confirmation from the other side*.
+
+## How it works (Phase 1 — manual)
+1. After a completed deal, **both parties** go to the pinned **Monthly Confirmation Thread** (or the buyer/seller&#x27;s post) and comment:
+   &gt; Confirming a completed deal with **u/theirusername** — bought/sold/traded a [watch]. Smooth transaction.
+2. A mod verifies both sides confirmed and **bumps each person&#x27;s flair** (e.g. `+1 Transaction` → `+2 Transactions`).
+3. Both confirmations must be from the two real parties to the trade. That&#x27;s it.
+
+## How it works (Phase 2 — automated bot)
+A bot will scan confirmation comments, match reciprocal confirmations between the two usernames, and update flair automatically — plus keep a wiki ledger of each user&#x27;s confirmed deals. (Design lives in the project&#x27;s `monitor/` + a future `reputation-bot/`.)
+
+## Rules of reputation
+- **Both sides must confirm** — one-sided claims don&#x27;t count.
+- **No fake/traded feedback.** Sock-puppets, &quot;confirm me and I&#x27;ll confirm you&quot; without a real deal, or buying rep = **ban** and flair reset.
+- Feedback is about a **completed transaction**, not friendliness. A deal that fell through isn&#x27;t a transaction.
+- Dealers carry a **Dealer** flair plus their count.
+
+## Checking someone&#x27;s rep
+- Look at their user flair for the count.
+- Click their profile / search the confirmation thread for their username to read past confirmations.
+- Low or no rep ≠ scammer — it just means *you* set the safety terms (meet in person, inspect first).
+
+## Dispute a rep issue
+Message the mods with proof. We can correct counts, remove fraudulent confirmations, and issue PSAs where warranted.</code></pre></div></div></details><details><summary><span>/wiki/timestamps</span><span class="dmeta">Timestamp Guide</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/timestamps</span><button class="copy" type="button">Copy</button></div><pre><code># Timestamp Guide
+
+A **timestamp** proves you physically have the watch *right now*. It&#x27;s mandatory on every [WTS] and [WTT] post and is the single most effective anti-scam tool we have.
+
+## How to make one
+1. Take a **handwritten** note on paper with two things:
+   - **Your Reddit username** (e.g. `u/yourname`)
+   - **Today&#x27;s date** (e.g. `19 Aug 2026`)
+2. Photograph the **actual watch next to that note**, both clearly readable in the same shot.
+3. Include that photo in your listing gallery.
+
+## Rules
+- Handwritten only — no typed/edited text overlays.
+- Watch **and** note in the **same frame**, both in focus.
+- Fresh for each listing. Don&#x27;t reuse an old timestamp on a new post.
+- If a buyer asks for a **fresh timestamp on request** (&quot;u/theirname&quot; + today&#x27;s date), provide one — refusing is a major red flag.
+
+## Good example (describe in your post)
+&gt; A photo of the watch lying on a paper that reads &quot;u/yourname — 19 Aug 2026&quot;, both sharp and legible.
+
+## Why we&#x27;re strict
+Scammers steal photos from other listings. They cannot produce a *fresh, specific* handwritten note with a username and today&#x27;s date next to the real watch. No timestamp = removed, no exceptions.</code></pre></div></div></details><details><summary><span>/wiki/authenticity-uae</span><span class="dmeta">Authenticity &amp; UAE</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/authenticity-uae</span><button class="copy" type="button">Copy</button></div><pre><code># Authenticity &amp; UAE Specifics
+
+The UAE watch market has its own quirks. Know them before you trade.
+
+## Grey market / parallel imports
+- The UAE is a major **grey-market hub** — genuine watches sold outside the brand&#x27;s official channel, often without the local AD warranty card, sometimes at a discount.
+- Grey market is **legitimate and allowed here.** Counterfeits are **not** (Rule 6).
+- **Sellers must disclose** grey-market/parallel status, and whether the warranty card is stamped, blank, or dated by an AD.
+
+## Box &amp; papers
+- &quot;Full set&quot; = watch + box + booklets + warranty card (ideally stamped/dated).
+- Papers materially affect value here — state exactly what&#x27;s included and the card date.
+- A blank/undated card ≠ fake, but disclose it.
+
+## Servicing &amp; authentication
+- For grails, verify at an **Authorised Dealer** or a reputable independent watchmaker before paying.
+- Ask for **service receipts**; note if aftermarket parts were fitted (must be disclosed on genuine pieces).
+- Common local ADs and watchmakers exist across Dubai/Abu Dhabi malls — a buyer inspection there is normal and reasonable.
+
+## Customs, import &amp; travel
+- Bringing a high-value watch into the UAE may attract **customs duty** (broadly ~5% on value over the personal allowance) — relevant if a piece was imported. Wearing vs. declaring matters; this isn&#x27;t legal advice.
+- Keep purchase receipts for provenance and any future resale/travel.
+
+## Payment norms
+- **Cash or instant bank transfer** are standard. There&#x27;s **no PayPal G&amp;S protection** locally.
+- Confirm funds have **cleared into your account** (not just a screenshot) before releasing a watch.
+- Large cash meetups: do them somewhere safe (bank lobby is ideal).
+
+## Fakes: how the region gets targeted
+&quot;First copy&quot;, &quot;master copy&quot;, &quot;AAA&quot;, &quot;super clone&quot; are all **counterfeits** — banned, reported, instant ban. If a price is far below market for a hot reference, assume fake or scam until proven otherwise.
+
+_This page is community guidance, not legal or tax advice._</code></pre></div></div></details><details><summary><span>/wiki/faq</span><span class="dmeta">FAQ</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Body of /wiki/faq</span><button class="copy" type="button">Copy</button></div><pre><code># FAQ
+
+**Is this only for Dubai?**
+No — the whole UAE (Dubai, Abu Dhabi, Sharjah, Ajman, RAK, etc.). Put your emirate in the title.
+
+**Can I sell a grey-market watch?**
+Yes. Grey market is fine and common here — just disclose it. Fakes/replicas are banned (Rule 6).
+
+**What currency?**
+Price in **AED**. A USD equivalent is optional and welcome.
+
+**Do I really need a timestamp?**
+Yes, on every WTS/WTT. No timestamp = auto-removed. See [Timestamps](timestamps).
+
+**My post disappeared / is awaiting review.**
+New or low-karma accounts are held for mod approval (anti-scam). It&#x27;ll be reviewed shortly, or message the mods.
+
+**Can dealers sell here?**
+Yes, if you set the **Dealer** flair and disclose it in every listing (Rule 9).
+
+**Can I ship instead of meeting?**
+You can, but you accept the risk — there&#x27;s no buyer protection locally. Meetups are strongly preferred. See [How to Buy](how-to-buy).
+
+**How do I get transaction flair?**
+Complete a deal, then both parties confirm it. See [Reputation](reputation).
+
+**Someone scammed me / I saw a scammer.**
+Gather proof and message the mods. Don&#x27;t post public accusations first. See [Scam Prevention](scam-prevention).
+
+**Can I post my listing from another sub / dubizzle here too?**
+You can list it here, but write a native post that meets our format (tag, price, timestamp). Don&#x27;t just drop an external link (Rule 11).
+
+**Can I bump my listing?**
+Once every 48 hours max. One live listing per item (Rule 10).</code></pre></div></div></details></section><section class="step" id="step2"><div class="shead"><label class="tick"><input type="checkbox" data-step="2"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 2 <span class="dot">·</span> 8 min</div><h2>Add the 12 rules</h2><p class="where">Mod Tools → Rules → Add rule</p></div></div><p class="why">Reddit asks for a short name and a longer description separately, so each rule below is split into the two fields.</p><p class="tip">Set every rule to apply to <strong>Posts &amp; comments</strong> unless you have a reason not to. The short name is what appears in the report menu.</p><div class="rules"><div class="rule"><div class="rnum">1</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Use the correct title tag</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Every post title **must** begin with one of these tags:
+- **[WTS]** — Want to Sell
+- **[WTB]** — Want to Buy
+- **[WTT]** — Want to Trade
+- **[WTI]** — Want the community&#x27;s Info / opinion (ID, value, &quot;should I buy?&quot;)
+- **[PSA]** — Public warning / scam alert (be prepared to provide proof)
+- **[MODPOST]** — Mods only
+
+Posts without a valid tag are removed automatically.</code></pre></div></div></div><div class="rule"><div class="rnum">2</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Title format</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Format: `[TAG] Brand Model (Reference) — Price AED — Emirate`
+Example: `[WTS] Omega Speedmaster Professional 3861 — 24,000 AED — Dubai`
+
+WTS/WTT posts **must** include a price in **AED** (a USD equivalent is optional and welcome). &quot;DM for price&quot;, &quot;make offer&quot;, and &quot;open to offers&quot; as the *only* price are not allowed — set a number.</code></pre></div></div></div><div class="rule"><div class="rnum">3</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Timestamp photos are mandatory (anti-scam cornerstone)</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Every **[WTS]** and **[WTT]** post must include a **timestamp**: a clear photo of the *actual* watch next to a handwritten note showing **your Reddit username** and **today&#x27;s date**. Stock/press images alone are not acceptable and are the single biggest scam tell. No timestamp = removed. See the [timestamp guide](wiki/timestamps.md).</code></pre></div></div></div><div class="rule"><div class="rnum">4</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>You must own it and be in the UAE</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>No proxy sales, no &quot;my friend is selling&quot;, no drop-shipping, no sourcing-on-request. You must physically possess the watch and be located in the UAE. Dealers are welcome but **must** disclose dealer status (see Rule 9).</code></pre></div></div></div><div class="rule"><div class="rnum">5</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Full, honest condition disclosure</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>State: box &amp; papers (or not), year/service history, condition and flaws, and whether the piece is **grey-market / parallel import**. Non-disclosure of known faults or aftermarket parts is a bannable offence. See [Authenticity &amp; UAE specifics](wiki/authenticity-uae.md).</code></pre></div></div></div><div class="rule"><div class="rnum">6</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>No counterfeits, replicas, &quot;reps&quot;, or franken-watches sold as genuine</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Zero tolerance. Offering, requesting, or linking replicas (&quot;rep&quot;, &quot;super clone&quot;, &quot;AAA&quot;) is an **instant permanent ban** and a report to Reddit. Aftermarket/aftermarket-modified parts must be explicitly disclosed on genuine pieces.</code></pre></div></div></div><div class="rule"><div class="rnum">7</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Trade safely — this is a cash market, not PayPal</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>There is **no buyer-protection layer** like PayPal G&amp;S here. The community strongly recommends **in-person meetups** in safe public places (mall concourses, DIFC, bank lobbies) with cash or instant bank transfer, and inspecting the watch before paying. If you ship, you accept the risk. Read [Scam Prevention](wiki/scam-prevention.md) before your first deal.</code></pre></div></div></div><div class="rule"><div class="rnum">8</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Build and respect reputation</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Confirmed trades earn a transaction-count user flair via our [reputation system](wiki/reputation.md). Faking feedback, sock-puppet confirmations, or trading feedback for favours = ban. Check a counterparty&#x27;s rep before dealing.</code></pre></div></div></div><div class="rule"><div class="rnum">9</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Dealers must self-identify</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Businesses, resellers, and high-volume flippers must set the **Dealer** user flair and disclose it in every listing. Undisclosed commercial selling behind a &quot;private seller&quot; front is removed.</code></pre></div></div></div><div class="rule"><div class="rnum">10</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>One live listing per item; mark it [SOLD]</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>No duplicate simultaneous listings for the same watch. Bump no more than once every 48 hours. When it sells, edit the title/flair to **SOLD**. Keep the market clean.</code></pre></div></div></div><div class="rule"><div class="rnum">11</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>No off-platform scams, no solicitation, no spam</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Don&#x27;t push people to sketchy off-platform &quot;deals&quot;, don&#x27;t cold-DM to circumvent public accountability, no referral spam, no unrelated self-promo. Keep negotiations in comments where possible.</code></pre></div></div></div><div class="rule"><div class="rnum">12</div><div class="rbody"><div class="block"><div class="bhead"><span class="blabel">Rule name (short)</span><button class="copy" type="button">Copy</button></div><pre><code>Be civil</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Description (full text)</span><button class="copy" type="button">Copy</button></div><pre><code>Normal reddiquette. No harassment, no doxxing, no lowball-shaming crusades. Disagree about a watch, not the person.</code></pre></div></div></div></div></section><section class="step" id="step3"><div class="shead"><label class="tick"><input type="checkbox" data-step="3"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 3 <span class="dot">·</span> 2 min</div><h2>Install AutoModerator</h2><p class="where">Go to <code>reddit.com/r/dubaiwatchexchange/wiki/config/automoderator</code></p></div></div><p class="why">This one file does most of your daily moderation: title-tag enforcement, mandatory AED price, a safety auto-comment on every listing, a hold on brand-new accounts, and replica/scam keyword reports.</p><p class="tip"><strong>Paste it as-is.</strong> YAML is whitespace-sensitive — do not re-indent or let an editor convert tabs. Then click <em>Save page</em>.</p><div class="block"><div class="bhead"><span class="blabel">automod.yaml — full config</span><button class="copy" type="button">Copy</button></div><pre><code># =====================================================================
+# r/DubaiWatchExchange — AutoModerator configuration
+# Paste into: https://www.reddit.com/r/dubaiwatchexchange/wiki/config/automoderator
+# Docs: https://www.reddit.com/wiki/automoderator/full-documentation
+# Test regex changes on a private test post before relying on them.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 1) Require a valid title tag. Remove + explain if missing.
+#    (~title = title does NOT match the allowed-tags pattern.)
+# ---------------------------------------------------------------------
+---
+type: submission
+~title (regex): &#x27;^\s*\[(WTS|WTB|WTT|WTI|PSA|MODPOST)\]&#x27;
+action: remove
+action_reason: &quot;Missing/invalid title tag&quot;
+comment_stickied: true
+comment: |
+    **Removed — your title needs a tag.**
+
+    Every post must start with one of: **[WTS]** (sell), **[WTB]** (buy),
+    **[WTT]** (trade), **[WTI]** (info/opinion), or **[PSA]** (warning).
+
+    Please repost using the format:
+    `[WTS] Brand Model (Ref) — Price AED — Emirate`
+    Example: `[WTS] Tudor Black Bay 58 — 11,500 AED — Dubai`
+---
+
+# ---------------------------------------------------------------------
+# 2) WTS/WTT must contain a price signal (a number, or AED/dhs/dirham).
+# ---------------------------------------------------------------------
+type: submission
+title (regex): &#x27;^\s*\[(WTS|WTT)\]&#x27;
+~title (regex): &#x27;(aed|dhs|dh\b|dirham|\$|\d{3,})&#x27;
+action: remove
+action_reason: &quot;WTS/WTT with no price&quot;
+comment_stickied: true
+comment: |
+    **Removed — WTS/WTT posts must list a price in AED.**
+
+    &quot;DM for price&quot; / &quot;make offer&quot; alone isn&#x27;t allowed. Please repost with a
+    number, e.g. `... — 24,000 AED — Dubai`. A USD equivalent is optional.
+---
+
+# ---------------------------------------------------------------------
+# 3) Timestamp reminder on every WTS/WTT (sticky auto-comment).
+#    (Reminder + manual mod check; images can&#x27;t be reliably auto-verified.)
+# ---------------------------------------------------------------------
+type: submission
+title (regex): &#x27;^\s*\[(WTS|WTT)\]&#x27;
+comment_stickied: true
+comment: |
+    ⏱️ **Sellers:** this post needs a **timestamp** — a photo of the watch next
+    to a handwritten note with **u/{{author}}** and **today&#x27;s date**. No
+    timestamp = removed. Guide: /r/dubaiwatchexchange/wiki/timestamps
+
+    🛡️ **Buyers:** meet in person in a safe public place, inspect before paying,
+    and check the seller&#x27;s transaction flair. There is **no PayPal protection**
+    here. Report anything suspicious. Guide: /r/dubaiwatchexchange/wiki/scam-prevention
+---
+
+# ---------------------------------------------------------------------
+# 4) Account-age / karma gate — hold new &amp; low-karma authors for review.
+#    &#x27;filter&#x27; = sent to modqueue (not public, not auto-removed).
+# ---------------------------------------------------------------------
+type: submission
+author:
+    combined_karma: &quot;&lt; 50&quot;
+action: filter
+action_reason: &quot;Low combined karma (&lt;50) — possible throwaway&quot;
+---
+
+type: submission
+author:
+    account_age: &quot;&lt; 21 days&quot;
+action: filter
+action_reason: &quot;New account (&lt;21 days) — review before approving&quot;
+---
+
+# ---------------------------------------------------------------------
+# 5) Counterfeit / replica terms — report to modqueue (Rule 6).
+# ---------------------------------------------------------------------
+type: any
+body+title (regex, includes-word): [&#x27;rep&#x27;, &#x27;reps&#x27;, &#x27;replica&#x27;, &#x27;replicas&#x27;, &#x27;super clone&#x27;, &#x27;superclone&#x27;, &#x27;clone&#x27;, &#x27;aaa grade&#x27;, &#x27;aaa quality&#x27;, &#x27;homage for sale&#x27;, &#x27;first copy&#x27;, &#x27;master copy&#x27;]
+action: report
+action_reason: &quot;Possible counterfeit/replica reference (Rule 6)&quot;
+---
+
+# ---------------------------------------------------------------------
+# 6) Classic scam patterns — report to modqueue for a human look.
+# ---------------------------------------------------------------------
+type: any
+body (regex, includes): [&#x27;western union&#x27;, &#x27;gift card&#x27;, &#x27;gift cards&#x27;, &#x27;crypto only&#x27;, &#x27;usdt only&#x27;, &#x27;no meet&#x27;, &#x27;no meetup&#x27;, &#x27;shipping only&#x27;, &#x27;wise only&#x27;, &#x27;payment first&#x27;, &#x27;pay first then&#x27;, &#x27;god bless&#x27;, &#x27;text me on whatsapp \+&#x27;, &#x27;telegram @&#x27;]
+action: report
+action_reason: &quot;Possible scam pattern — review&quot;
+---
+
+# ---------------------------------------------------------------------
+# 7) Off-site marketplace links in submissions — report (Rule 11).
+# ---------------------------------------------------------------------
+type: submission
+domain: [&#x27;dubizzle.com&#x27;, &#x27;chrono24.com&#x27;, &#x27;ebay.com&#x27;, &#x27;facebook.com&#x27;, &#x27;instagram.com&#x27;, &#x27;wa.me&#x27;]
+action: report
+action_reason: &quot;External marketplace/contact link — review&quot;
+---
+
+# ---------------------------------------------------------------------
+# 8) Auto-flair SOLD when the OP comments that it sold.
+# ---------------------------------------------------------------------
+type: comment
+body (regex): &#x27;\b(sold|deal done|gone|no longer available)\b&#x27;
+is_top_level: true
+author:
+    is_submitter: true
+parent_submission:
+    title (regex): &#x27;^\s*\[(WTS|WTT)\]&#x27;
+set_flair:
+    text: &quot;SOLD&quot;
+    css_class: &quot;sold&quot;
+overwrite_flair: true
+action: comment
+comment: |
+    Marked as **SOLD** — thanks! If you traded with someone here, please both
+    confirm in the reputation thread so you each get credit:
+    /r/dubaiwatchexchange/wiki/reputation
+---</code></pre></div><p class="tip">Thresholds are set to hold accounts under <strong>21 days old</strong> or <strong>50 combined karma</strong> for review. That is deliberate friction against throwaway scam accounts; established members will not notice it.</p></section><section class="step" id="step4"><div class="shead"><label class="tick"><input type="checkbox" data-step="4"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 4 <span class="dot">·</span> 5 min</div><h2>Create post flairs</h2><p class="where">Mod Tools → Post Flair → Add flair</p></div></div><p class="tip">Turn <strong>“Allow users to assign”</strong> ON for WTS, WTB, WTT, WTI and Discussion. Leave it OFF for SOLD, PSA and Meta — those are yours to set.</p><div class="block"><div class="bhead"><span class="blabel">Post flair templates (one per line)</span><button class="copy" type="button">Copy</button></div><pre><code>WTS — Want to Sell
+WTB — Want to Buy
+WTT — Want to Trade
+WTI — Info / Opinion
+SOLD
+PSA / Scam Alert
+Discussion
+Meta</code></pre></div><p class="tip">SOLD is applied automatically by AutoMod when a seller comments “sold”, so the template must exist with exactly that text.</p></section><section class="step" id="step5"><div class="shead"><label class="tick"><input type="checkbox" data-step="5"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 5 <span class="dot">·</span> 4 min</div><h2>Create reputation user flairs</h2><p class="where">Mod Tools → User Flair → enable user flair, then Add flair</p></div></div><p class="why">Transaction count is the trust signal that makes a cash market work. Without it, buyers have nothing to check.</p><p class="tip">Set these to <strong>mod-assignable only</strong> — users must not be able to award themselves transactions.</p><div class="block"><div class="bhead"><span class="blabel">User flair templates</span><button class="copy" type="button">Copy</button></div><pre><code>+1 Transaction
++2 Transactions
++3 Transactions
++5 Transactions
++10 Transactions
+Dealer
+Verified Meetup ✓</code></pre></div></section><section class="step" id="step6"><div class="shead"><label class="tick"><input type="checkbox" data-step="6"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 6 <span class="dot">·</span> 5 min</div><h2>Load removal reasons</h2><p class="where">Mod Tools → Removal Reasons → Add reason</p></div></div><p class="why">Turns each removal into one click with a consistent, non-personal explanation — which is most of what keeps a marketplace sub calm.</p><details><summary><span>Missing/invalid title tag</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Missing/invalid title tag</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: your title must start with [WTS], [WTB], [WTT], [WTI], or [PSA]. Please repost using the format `[WTS] Brand Model (Ref) — Price AED — Emirate`. See the rules: /r/dubaiwatchexchange/wiki/rules</code></pre></div></div></details><details><summary><span>No price</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — No price</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: WTS/WTT posts must include a price in AED. &quot;DM for price&quot; isn&#x27;t allowed — please repost with a number.</code></pre></div></div></details><details><summary><span>No timestamp</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — No timestamp</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: sellers must include a timestamp photo (the watch next to a handwritten note with your username + today&#x27;s date). Guide: /r/dubaiwatchexchange/wiki/timestamps</code></pre></div></div></details><details><summary><span>Insufficient photos / stock images only</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Insufficient photos / stock images only</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: we need clear photos of the *actual* item, not stock/press images. Please add real photos and the timestamp.</code></pre></div></div></details><details><summary><span>Proxy / not in possession / not in UAE</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Proxy / not in possession / not in UAE</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: you must own the item and be located in the UAE (Rule 4). No sourcing-on-request or proxy sales.</code></pre></div></div></details><details><summary><span>Counterfeit / replica (BAN)</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Counterfeit / replica (BAN)</span><button class="copy" type="button">Copy</button></div><pre><code>Removed and banned: replicas/&quot;reps&quot;/counterfeits are strictly prohibited (Rule 6) and reported to Reddit.</code></pre></div></div></details><details><summary><span>Undisclosed dealer</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Undisclosed dealer</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: businesses/resellers must set the Dealer flair and disclose it in the post (Rule 9). Please re-post with disclosure.</code></pre></div></div></details><details><summary><span>Duplicate / bumping too soon</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Duplicate / bumping too soon</span><button class="copy" type="button">Copy</button></div><pre><code>Removed: one live listing per item, and bumps are limited to once per 48h (Rule 10).</code></pre></div></div></details><details><summary><span>Off-platform / solicitation / spam</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Off-platform / solicitation / spam</span><button class="copy" type="button">Copy</button></div><pre><code>Removed under Rule 11 (no off-platform solicitation, referral spam, or unrelated self-promotion).</code></pre></div></div></details><details><summary><span>Incivility</span></summary><div class="dbody"><div class="block"><div class="bhead"><span class="blabel">Removal reason — Incivility</span><button class="copy" type="button">Copy</button></div><pre><code>Removed under Rule 12. Keep it civil — disagree about the watch, not the person.</code></pre></div></div></details></section><section class="step" id="step7"><div class="shead"><label class="tick"><input type="checkbox" data-step="7"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 7 <span class="dot">·</span> 6 min</div><h2>Fill in the text half of your appearance</h2><p class="where">Mod Tools → Community Appearance</p></div></div><p class="why">Your images and colours are already done. This is the copy that sits beside them.</p><div class="block"><div class="bhead"><span class="blabel">Community description (the short public blurb)</span><button class="copy" type="button">Copy</button></div><pre><code>The UAE&#x27;s marketplace for buying, selling and trading watches. Timestamped listings, real meetups, verified reputation. Dubai · Abu Dhabi · Sharjah and beyond.</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Sidebar / About widget</span><button class="copy" type="button">Copy</button></div><pre><code>**r/DubaiWatchExchange** is where the UAE watch community buys, sells, and trades — from a first Seiko to independents and grail Rolex.
+
+🕒 Every seller posts a **timestamp**. 🤝 We meet in person and pay cash/transfer — there&#x27;s no PayPal protection here, so trust is built on **reputation** and **proof**. 🚫 Zero tolerance for fakes.
+
+**New here? Read the Rules and Scam Prevention before your first deal.**</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Text widget — “Post format”</span><button class="copy" type="button">Copy</button></div><pre><code>[WTS] Brand Model (Ref) — Price AED — Emirate
+
+Tags: [WTS] sell · [WTB] buy · [WTT] trade · [WTI] info · [PSA] warning</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Menu widget — wiki links</span><button class="copy" type="button">Copy</button></div><pre><code>📜 Rules → /r/dubaiwatchexchange/wiki/rules
+💸 How to Sell → /r/dubaiwatchexchange/wiki/how-to-sell
+🛒 How to Buy → /r/dubaiwatchexchange/wiki/how-to-buy
+🛡️ Scam Prevention → /r/dubaiwatchexchange/wiki/scam-prevention
+⭐ Reputation → /r/dubaiwatchexchange/wiki/reputation
+⏱️ Timestamps → /r/dubaiwatchexchange/wiki/timestamps
+🇦🇪 Authenticity &amp; UAE → /r/dubaiwatchexchange/wiki/authenticity-uae
+❓ FAQ → /r/dubaiwatchexchange/wiki/faq</code></pre></div><p class="tip">Add a <strong>Button widget</strong> labelled “Report a scammer” pointing at modmail, and keep the <strong>Rules widget</strong> on — it populates itself from step 2.</p></section><section class="step" id="step8"><div class="shead"><label class="tick"><input type="checkbox" data-step="8"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 8 <span class="dot">·</span> 5 min</div><h2>Post and pin the two anchor threads</h2><p class="where">Post as normal, then ⋯ → Pin to community (you get two slots)</p></div></div><div class="block"><div class="bhead"><span class="blabel">Welcome post — title</span><button class="copy" type="button">Copy</button></div><pre><code>📌 START HERE — Welcome to r/DubaiWatchExchange (rules, format &amp; safety)</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Welcome post — body</span><button class="copy" type="button">Copy</button></div><pre><code>Welcome to **r/DubaiWatchExchange** — the UAE&#x27;s home for buying, selling, and trading watches. From a first Seiko to independents and grail Rolex, if it tells the time and you&#x27;re in the Emirates, this is your marketplace.
+
+**📍 Post format — every listing must use it:**
+`[TAG] Brand Model (Ref) — Price AED — Emirate`
+Example: `[WTS] Tudor Black Bay 58 — 11,500 AED — Dubai`
+
+**🏷️ Tags:** `[WTS]` sell · `[WTB]` buy · `[WTT]` trade · `[WTI]` info/opinion · `[PSA]` warning
+
+**⏱️ Sellers — timestamps are mandatory.** Every WTS/WTT needs a photo of the actual watch next to a handwritten note with **your username + today&#x27;s date**. No timestamp = auto-removed. → [Timestamp guide](/r/dubaiwatchexchange/wiki/timestamps)
+
+**🛡️ Trade safely.** This is a cash market — there&#x27;s no PayPal protection here. Meet in person in a busy public place, inspect before paying, and confirm money has *cleared* before the watch changes hands. → [Scam prevention](/r/dubaiwatchexchange/wiki/scam-prevention)
+
+**⭐ Reputation.** Confirmed deals earn a transaction-count flair. Check a counterparty&#x27;s rep before dealing; confirm your own trades in the monthly thread. → [How reputation works](/r/dubaiwatchexchange/wiki/reputation)
+
+**🚫 Zero tolerance for fakes.** Replicas / &quot;reps&quot; / counterfeits = instant permanent ban.
+
+**New?** Read the [full rules](/r/dubaiwatchexchange/wiki/rules), [how to sell](/r/dubaiwatchexchange/wiki/how-to-sell), and [how to buy](/r/dubaiwatchexchange/wiki/how-to-buy). Dealers welcome — set the **Dealer** flair and disclose it.
+
+Questions or a scammer to report? **Message the mods.** Happy hunting. 🕒🇦🇪</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Confirmation thread — title</span><button class="copy" type="button">Copy</button></div><pre><code>🤝 Monthly Transaction Confirmation Thread — August 2026</code></pre></div><div class="block"><div class="bhead"><span class="blabel">Confirmation thread — body</span><button class="copy" type="button">Copy</button></div><pre><code>Completed a deal on r/DubaiWatchExchange this month? Confirm it here so both parties earn **reputation flair**.
+
+**How to confirm — both buyer and seller must comment:**
+&gt; Confirming a completed deal with **u/theirusername** — [bought / sold / traded] a [watch]. [One line on how it went.]
+
+**Rules:**
+- Both sides must confirm — one-sided claims don&#x27;t count.
+- Real completed deals only. No &quot;confirm me and I&#x27;ll confirm you&quot; without a trade.
+- Faking or trading feedback = ban + flair reset.
+
+A mod verifies reciprocal confirmations and bumps each person&#x27;s `+N Transactions` flair. Deals that fell through aren&#x27;t transactions. Full details: [Reputation](/r/dubaiwatchexchange/wiki/reputation).
+
+_New thread is posted at the start of each month._</code></pre></div><p class="tip">On the confirmation thread set <strong>Suggested sort → New</strong>, and flair it <strong>Meta</strong>. Repost a fresh one each month.</p></section><section class="step" id="step9"><div class="shead"><label class="tick"><input type="checkbox" data-step="9"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 9 <span class="dot">·</span> 20–30 min</div><h2>Seed 2–3 of your own real listings</h2><p class="where">Your sub, as a normal post</p></div></div><p class="why">This is the step that decides whether the sub lives. Infrastructure does not attract anyone — a sub with immaculate rules and zero listings still dies. Your first posts become the worked example every future seller copies, so make them exemplary: correct title, real timestamp, honest condition.</p><p class="tip">Use watches you actually own and would genuinely sell or trade. A listing you are not willing to honour is a bad first impression.</p><div class="block"><div class="bhead"><span class="blabel">Listing template</span><button class="copy" type="button">Copy</button></div><pre><code>[WTS] Brand Model (Reference) — 00,000 AED — Dubai
+
+**Condition:** 
+**Box &amp; papers:** 
+**Year / service history:** 
+**Grey market / parallel import:** 
+**Flaws:** 
+**Price:** 00,000 AED (firm / open to offers)
+**Meetup:** Dubai — happy to meet at [place]. In person preferred.
+
+Timestamp and full photo set: [imgur album link]</code></pre></div></section><section class="step" id="step10"><div class="shead"><label class="tick"><input type="checkbox" data-step="10"><span class="box"></span></label><div class="stitle"><div class="seyebrow">Step 10 <span class="dot">·</span> 5 min</div><h2>Test AutoMod before anyone arrives</h2><p class="where">Post from a throwaway or ask a friend</p></div></div><p class="why">Better to find a broken config yourself than to have your first real seller hit it.</p><ol class="checks"><li>Post <code>Selling my Omega</code> with no tag → should be <strong>removed</strong> with the title-tag comment.</li><li>Post <code>[WTS] Omega Speedmaster — DM for price — Dubai</code> → should be <strong>removed</strong> for no price.</li><li>Post <code>[WTS] Omega Speedmaster 3861 — 24,000 AED — Dubai</code> → should <strong>stay up</strong> with the timestamp/safety auto-comment.</li><li>Comment <code>sold</code> on your own WTS post → flair should flip to <strong>SOLD</strong>.</li></ol><p class="tip">Delete the test posts afterwards. If a check fails, the usual cause is the AutoMod paste losing its indentation — re-copy from step 3.</p></section>
+    <footer class="end">
+      <h2>Once it is live</h2>
+      <p><strong>Recruit a second moderator before you drive any traffic.</strong> A solo-modded marketplace is a single point of failure for scam reports, and Reddit is unforgiving about trade subs that go unmoderated. Someone from the local watch scene you already trust is ideal.</p>
+      <p>Then, in rough order:</p>
+      <ul>
+        <li>Post your own listings and answer every comment for the first few weeks. Early subs live or die on the founder being present.</li>
+        <li>Invite people one at a time — personally, never in bulk. Bulk DMs and auto-comments are what get marketplace subs flagged as spam.</li>
+        <li>Once there is a steady trickle of posts, the classifieds monitor becomes worth building: it watches Dubai classifieds subs for watch posts and surfaces them to you for manual, respectful invites. It needs one thing from you — the list of subs to watch.</li>
+      </ul>
+      <p class="sig">Source of truth lives in <code>dubaiwatchexchange/reddit/</code> in the Claude-playground repo. If you edit anything here, edit it there too so the two do not drift.</p>
+    </footer>
+  </main>
+</div>
+</div>
+<script>
+(function(){
+  var KEY='dwe-runbook-v1';
+  var boxes=[].slice.call(document.querySelectorAll('input[data-step]'));
+  var fill=document.querySelector('.fill'), count=document.querySelector('.pcount');
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ return {}; } }
+  function save(s){ try{ localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){} }
+  var state=load();
+  function paint(){
+    var n=0;
+    boxes.forEach(function(b){
+      var k=b.getAttribute('data-step'), on=!!state[k];
+      b.checked=on; if(on)n++;
+      b.closest('.step').classList.toggle('done-step',on);
+      var nav=document.querySelector('[data-nav="'+k+'"]');
+      if(nav) nav.classList.toggle('on',on);
+    });
+    fill.style.width=(n/boxes.length*100)+'%';
+    count.textContent=n+' / '+boxes.length+' done';
+  }
+  boxes.forEach(function(b){
+    b.addEventListener('change',function(){
+      state[b.getAttribute('data-step')]=b.checked; save(state); paint();
+    });
+  });
+  document.querySelector('.reset').addEventListener('click',function(){
+    state={}; save(state); paint();
+  });
+  paint();
+
+  function flash(btn,msg){
+    var old=btn.textContent; btn.textContent=msg; btn.classList.add('ok');
+    setTimeout(function(){ btn.textContent=old; btn.classList.remove('ok'); },1400);
+  }
+  document.addEventListener('click',function(ev){
+    var btn=ev.target.closest('.copy'); if(!btn) return;
+    var code=btn.closest('.block').querySelector('code');
+    var text=code.textContent;
+    function fallback(){
+      var ta=document.createElement('textarea');
+      ta.value=text; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-1000px';
+      document.body.appendChild(ta); ta.select();
+      var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      if(ok){ flash(btn,'Copied'); }
+      else{
+        var r=document.createRange(); r.selectNodeContents(code);
+        var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        flash(btn,'Press \u2318C');
+      }
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){flash(btn,'Copied');},fallback);
+    } else { fallback(); }
+  });
+})();
+</script>
